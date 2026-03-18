@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { X, Calendar, Clock, Tag, Star, Save, Trash2, Edit2, History, Plus, PackageCheck, Sun, Moon, Sunset, Sunrise, ClipboardList, Frown, Meh, Smile, Laugh, Angry, BrainCircuit, AlertOctagon, HeartCrack, ZapOff, Hourglass as HourglassIcon, AlertTriangle, Footprints, Target } from 'lucide-react';
 import { Subtask, WorkSession } from '../types';
 

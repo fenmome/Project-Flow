@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect, useRef, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Plus, Clock, CheckCircle2, ChevronLeft, ListTodo, Timer as TimerIcon, FolderPlus, Trash2, ChevronDown, ChevronUp, FileText, CalendarClock, Download, Upload, AlertTriangle, Sparkles, TrendingUp, GraduationCap, X, BarChart3, Pencil, Circle, Save, RotateCcw, ArrowUp, ArrowDown, GripVertical, Calendar, ArrowRight, ClipboardList, Archive, ArchiveRestore, Layers, FolderOpen, Edit2, Smile, CheckSquare, Link, Database, RefreshCw, Gift } from 'lucide-react';
 import { PieChart, Pie, Cell } from 'recharts';
 import { Project, Task, Subtask, TaskStatus, Version, WorkSession, Folder as FolderType, MoodEntry, ProjectTodo, DailyTask, WishlistItem } from './types';
@@ -14,6 +15,7 @@ import { WorkLogCalendarModal } from './components/WorkLogCalendarModal';
 import { DailyTimelinePanel } from './components/DailyTimelinePanel';
 import { WishlistModal } from './components/WishlistModal';
 import { CompletedTimelineModal } from './components/CompletedTimelineModal';
+import { LanguageSwitcher } from './components/LanguageSwitcher';
 
 // Tauri Imports
 import { writeTextFile } from '@tauri-apps/plugin-fs';
@@ -35,6 +37,7 @@ interface DragSource {
 }
 
 const App: React.FC = () => {
+  const { t } = useTranslation();
   const [projects, setProjects] = useState<Project[]>([]);
   const [folders, setFolders] = useState<FolderType[]>([]);
   const [activeProjectId, setActiveProjectId] = useState<string | null>(null);
@@ -1443,16 +1446,17 @@ const App: React.FC = () => {
           </div>
           
           <div className="flex items-center gap-3">
+            <LanguageSwitcher />
             {!activeProject && (
               <>
-                 <button onClick={() => fileInputRef.current?.click()} className="flex items-center gap-2 text-slate-500 hover:text-indigo-600 px-3 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-slate-50"><Upload size={16} /> <span className="hidden sm:inline">Import</span></button>
+                 <button onClick={() => fileInputRef.current?.click()} className="flex items-center gap-2 text-slate-500 hover:text-indigo-600 px-3 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-slate-50"><Upload size={16} /> <span className="hidden sm:inline">{t('header.import')}</span></button>
                  <button 
                     onClick={handleSetAutoSave}
                     className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-slate-50 border ${isAutoSaving ? 'border-amber-200 bg-amber-50 text-amber-600' : (autoSavePath || webDirHandle) ? 'border-green-200 bg-green-50 text-green-600' : 'border-transparent text-slate-500 hover:text-indigo-600'}`}
                     title={autoSavePath ? `Auto-save active: ${autoSavePath}` : webDirHandle ? "Web Auto-save Active" : "Set Auto-Save Location"}
                  >
                     {isAutoSaving ? <RefreshCw size={16} className="animate-spin"/> : <Database size={16} />} 
-                    <span className="hidden sm:inline">{isAutoSaving ? 'Saving...' : (autoSavePath || webDirHandle) ? 'Auto-Save On' : 'Auto Save'}</span>
+                    <span className="hidden sm:inline">{isAutoSaving ? t('header.saving') : (autoSavePath || webDirHandle) ? t('header.autoSaveOn') : t('header.autoSave')}</span>
                  </button>
                  <button onClick={() => {
                      const fullBackup = {
@@ -1469,15 +1473,15 @@ const App: React.FC = () => {
                      link.href = URL.createObjectURL(blob);
                      link.download = `ThesisFlow-FullBackup-${new Date().toISOString().split('T')[0]}.json`;
                      document.body.appendChild(link); link.click(); document.body.removeChild(link);
-                 }} className="flex items-center gap-2 text-slate-500 hover:text-indigo-600 px-3 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-slate-50"><Download size={16} /> <span className="hidden sm:inline">Backup</span></button>
+                 }} className="flex items-center gap-2 text-slate-500 hover:text-indigo-600 px-3 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-slate-50"><Download size={16} /> <span className="hidden sm:inline">{t('header.backup')}</span></button>
               </>
             )}
-            <button onClick={() => setIsWishlistOpen(true)} className="flex items-center gap-2 bg-pink-50 hover:bg-pink-100 text-pink-600 px-4 py-2 rounded-lg text-sm font-medium transition-colors border border-pink-200"><Gift size={16} /> <span className="hidden sm:inline">Wishlist</span></button>
-            <button onClick={() => setIsCalendarModalOpen(true)} className="flex items-center gap-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-600 px-4 py-2 rounded-lg text-sm font-medium transition-colors border border-indigo-200"><Calendar size={16} /> <span className="hidden sm:inline">Calendar</span></button>
-            <button onClick={() => setIsCompletedTimelineOpen(true)} className="flex items-center gap-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-600 px-4 py-2 rounded-lg text-sm font-medium transition-colors border border-emerald-200"><CheckCircle2 size={16} /> <span className="hidden sm:inline">Done Timeline</span></button>
-            <button onClick={() => setIsMoodModalOpen(true)} className="flex items-center gap-2 bg-pink-50 hover:bg-pink-100 text-pink-600 px-4 py-2 rounded-lg text-sm font-medium transition-colors border border-pink-200"><Smile size={16} /> <span className="hidden sm:inline">Mood</span></button>
-            <button onClick={() => setIsAIModalOpen(true)} className="flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all shadow-lg shadow-indigo-200"><Sparkles size={16} /> <span className="hidden sm:inline">AI Planner</span></button>
-            <button onClick={() => setIsModalOpen(true)} className="flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors shadow-lg shadow-slate-200"><Plus size={16} /> <span className="hidden sm:inline">New Project</span></button>
+            <button onClick={() => setIsWishlistOpen(true)} className="flex items-center gap-2 bg-pink-50 hover:bg-pink-100 text-pink-600 px-4 py-2 rounded-lg text-sm font-medium transition-colors border border-pink-200"><Gift size={16} /> <span className="hidden sm:inline">{t('header.wishlist')}</span></button>
+            <button onClick={() => setIsCalendarModalOpen(true)} className="flex items-center gap-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-600 px-4 py-2 rounded-lg text-sm font-medium transition-colors border border-indigo-200"><Calendar size={16} /> <span className="hidden sm:inline">{t('header.calendar')}</span></button>
+            <button onClick={() => setIsCompletedTimelineOpen(true)} className="flex items-center gap-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-600 px-4 py-2 rounded-lg text-sm font-medium transition-colors border border-emerald-200"><CheckCircle2 size={16} /> <span className="hidden sm:inline">{t('header.doneTimeline')}</span></button>
+            <button onClick={() => setIsMoodModalOpen(true)} className="flex items-center gap-2 bg-pink-50 hover:bg-pink-100 text-pink-600 px-4 py-2 rounded-lg text-sm font-medium transition-colors border border-pink-200"><Smile size={16} /> <span className="hidden sm:inline">{t('header.mood')}</span></button>
+            <button onClick={() => setIsAIModalOpen(true)} className="flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all shadow-lg shadow-indigo-200"><Sparkles size={16} /> <span className="hidden sm:inline">{t('header.aiPlanner')}</span></button>
+            <button onClick={() => setIsModalOpen(true)} className="flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors shadow-lg shadow-slate-200"><Plus size={16} /> <span className="hidden sm:inline">{t('header.newProject')}</span></button>
           </div>
         </div>
       </header>
@@ -1490,12 +1494,12 @@ const App: React.FC = () => {
             <div className="w-64 shrink-0 hidden md:flex flex-col space-y-6 h-[calc(100vh-100px)] sticky top-24">
                 <div className="flex-1 overflow-y-auto">
                     <div className="space-y-1">
-                        <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider px-3 mb-2">Projects</h3>
+                        <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider px-3 mb-2">{t('sidebar.projects')}</h3>
                         <button 
                             onClick={() => setCurrentView('all')}
                             className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition-colors ${currentView === 'all' ? 'bg-indigo-50 text-indigo-700' : 'text-slate-600 hover:bg-slate-50'}`}
                         >
-                            <Layers size={16} /> All Projects
+                            <Layers size={16} /> {t('sidebar.allProjects')}
                         </button>
                     </div>
                     
@@ -1554,7 +1558,7 @@ const App: React.FC = () => {
                             onClick={() => setCurrentView('archived')}
                             className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition-colors ${currentView === 'archived' ? 'bg-slate-100 text-slate-800' : 'text-slate-500 hover:bg-slate-50'}`}
                         >
-                            <Archive size={16} /> Archive
+                            <Archive size={16} /> {t('sidebar.archived')}
                         </button>
                     </div>
                 </div>
@@ -1574,8 +1578,8 @@ const App: React.FC = () => {
             <div className="flex-1 space-y-6">
                 <div className="flex items-center justify-between">
                     <h2 className="text-2xl font-bold text-slate-800">
-                        {currentView === 'all' ? 'All Projects' : 
-                         currentView === 'archived' ? 'Archived Projects' :
+                        {currentView === 'all' ? t('sidebar.allProjects') :
+                         currentView === 'archived' ? t('sidebar.archived') :
                          folders.find(f => f.id === currentView)?.name || 'Projects'}
                     </h2>
                     <span className="text-sm text-slate-500">{filteredProjects.length} projects</span>
@@ -1679,7 +1683,7 @@ const App: React.FC = () => {
           <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-300">
             {/* Nav & Header Area */}
             <div className="flex items-center justify-between">
-              <button onClick={() => setActiveProjectId(null)} className="flex items-center gap-2 text-slate-500 hover:text-indigo-600 transition-colors text-sm font-medium"><ChevronLeft size={16} /> Back to Dashboard</button>
+              <button onClick={() => setActiveProjectId(null)} className="flex items-center gap-2 text-slate-500 hover:text-indigo-600 transition-colors text-sm font-medium"><ChevronLeft size={16} /> {t('projectDetail.backToDashboard')}</button>
             </div>
 
             <div className="flex justify-between items-start">

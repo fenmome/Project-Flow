@@ -1,0 +1,138 @@
+{
+  "header": {
+    "title": "ProjectFlow",
+    "import": "导入",
+    "autoSave": "自动保存",
+    "saving": "保存中...",
+    "autoSaveOn": "自动保存已开启",
+    "backup": "备份",
+    "wishlist": "愿望清单",
+    "calendar": "日历",
+    "doneTimeline": "完成时间线",
+    "mood": "心情",
+    "aiPlanner": "AI 规划",
+    "newProject": "新建项目"
+  },
+  "sidebar": {
+    "projects": "项目",
+    "allProjects": "全部项目",
+    "archived": "已归档",
+    "dailyTasks": "每日任务",
+    "addTask": "添加每日任务..."
+  },
+  "projectDetail": {
+    "backToDashboard": "返回仪表盘",
+    "description": "描述",
+    "deadline": "截止日期",
+    "progress": "进度",
+    "noDeadline": "未设置截止日期",
+    "addVersion": "添加版本",
+    "newVersionPlaceholder": "输入版本名称...",
+    "edit": "编辑",
+    "delete": "删除",
+    "archive": "归档",
+    "unarchive": "取消归档",
+    "created": "创建于",
+    "updated": "更新于",
+    "totalTime": "总时间",
+    "sessions": "工作记录",
+    "addTaskCategory": "添加任务分类",
+    "newCategoryPlaceholder": "输入分类名称...",
+    "addSubtask": "添加子任务",
+    "newSubtaskPlaceholder": "输入子任务标题...",
+    "notes": "备注",
+    "noNotes": "暂无备注",
+    "plannedStart": "计划开始",
+    "plannedEnd": "计划结束",
+    "actualStart": "实际开始",
+    "actualEnd": "实际结束",
+    "notStarted": "未开始",
+    "inProgress": "进行中",
+    "completed": "已完成",
+    "markComplete": "标记完成",
+    "markIncomplete": "标记未完成",
+    "logWork": "记录工作",
+    "viewDetails": "查看详情"
+  },
+  "modals": {
+    "newProject": {
+      "title": "创建新项目",
+      "nameLabel": "项目名称",
+      "namePlaceholder": "输入项目名称...",
+      "descriptionLabel": "描述（可选）",
+      "descriptionPlaceholder": "输入项目描述...",
+      "deadlineLabel": "截止日期（可选）",
+      "cancel": "取消",
+      "create": "创建项目"
+    },
+    "aiPlanner": {
+      "title": "AI 项目规划",
+      "apiKeyLabel": "Google Gemini API 密钥",
+      "apiKeyPlaceholder": "输入您的 API 密钥...",
+      "topicLabel": "论文/项目主题",
+      "topicPlaceholder": "例如：医疗领域的人工智能应用",
+      "pagesLabel": "预期页数/时长",
+      "pagesPlaceholder": "例如：100页或6个月",
+      "generate": "生成计划",
+      "generating": "生成中...",
+      "result": "生成的计划",
+      "usePlan": "使用此计划",
+      "cancel": "取消"
+    },
+    "workSession": {
+      "title": "记录工作时段",
+      "durationLabel": "时长（分钟）",
+      "focusLabel": "专注度评分",
+      "reflectionLabel": "反思/备注",
+      "reflectionPlaceholder": "完成了什么？遇到了什么障碍？",
+      "cancel": "取消",
+      "save": "保存记录"
+    },
+    "moodTracker": {
+      "title": "心情追踪",
+      "howAreYou": "您感觉如何？",
+      "noteLabel": "备注（可选）",
+      "notePlaceholder": "添加关于您一天的备注...",
+      "history": "历史记录",
+      "save": "保存心情",
+      "cancel": "取消"
+    },
+    "wishlist": {
+      "title": "愿望清单",
+      "subtitle": "长期目标和想法",
+      "addItem": "添加项目",
+      "newItemPlaceholder": "输入愿望清单项目...",
+      "importance": "重要性",
+      "note": "备注",
+      "noItems": "暂无项目。添加您的第一个愿望！"
+    },
+    "common": {
+      "close": "关闭",
+      "save": "保存",
+      "cancel": "取消",
+      "delete": "删除",
+      "edit": "编辑",
+      "confirm": "确认",
+      "loading": "加载中..."
+    }
+  },
+  "status": {
+    "pending": "待处理",
+    "inProgress": "进行中",
+    "completed": "已完成",
+    "archived": "已归档"
+  },
+  "time": {
+    "minutes": "分钟",
+    "hours": "小时",
+    "days": "天",
+    "today": "今天",
+    "yesterday": "昨天",
+    "tomorrow": "明天"
+  },
+  "language": {
+    "name": "语言",
+    "en": "English",
+    "zh": "中文"
+  }
+}

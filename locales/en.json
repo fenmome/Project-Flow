@@ -1,0 +1,138 @@
+{
+  "header": {
+    "title": "ProjectFlow",
+    "import": "Import",
+    "autoSave": "Auto Save",
+    "saving": "Saving...",
+    "autoSaveOn": "Auto-Save On",
+    "backup": "Backup",
+    "wishlist": "Wishlist",
+    "calendar": "Calendar",
+    "doneTimeline": "Done Timeline",
+    "mood": "Mood",
+    "aiPlanner": "AI Planner",
+    "newProject": "New Project"
+  },
+  "sidebar": {
+    "projects": "Projects",
+    "allProjects": "All Projects",
+    "archived": "Archived",
+    "dailyTasks": "Daily Tasks",
+    "addTask": "Add a daily task..."
+  },
+  "projectDetail": {
+    "backToDashboard": "Back to Dashboard",
+    "description": "Description",
+    "deadline": "Deadline",
+    "progress": "Progress",
+    "noDeadline": "No deadline set",
+    "addVersion": "Add Version",
+    "newVersionPlaceholder": "Enter version name...",
+    "edit": "Edit",
+    "delete": "Delete",
+    "archive": "Archive",
+    "unarchive": "Unarchive",
+    "created": "Created",
+    "updated": "Updated",
+    "totalTime": "Total Time",
+    "sessions": "Sessions",
+    "addTaskCategory": "Add Task Category",
+    "newCategoryPlaceholder": "Enter category name...",
+    "addSubtask": "Add Subtask",
+    "newSubtaskPlaceholder": "Enter subtask title...",
+    "notes": "Notes",
+    "noNotes": "No notes added",
+    "plannedStart": "Planned Start",
+    "plannedEnd": "Planned End",
+    "actualStart": "Actual Start",
+    "actualEnd": "Actual End",
+    "notStarted": "Not started",
+    "inProgress": "In progress",
+    "completed": "Completed",
+    "markComplete": "Mark complete",
+    "markIncomplete": "Mark incomplete",
+    "logWork": "Log Work",
+    "viewDetails": "View Details"
+  },
+  "modals": {
+    "newProject": {
+      "title": "Create New Project",
+      "nameLabel": "Project Name",
+      "namePlaceholder": "Enter project name...",
+      "descriptionLabel": "Description (Optional)",
+      "descriptionPlaceholder": "Enter project description...",
+      "deadlineLabel": "Deadline (Optional)",
+      "cancel": "Cancel",
+      "create": "Create Project"
+    },
+    "aiPlanner": {
+      "title": "AI Project Planner",
+      "apiKeyLabel": "Google Gemini API Key",
+      "apiKeyPlaceholder": "Enter your API key...",
+      "topicLabel": "Thesis/Project Topic",
+      "topicPlaceholder": "e.g., Machine Learning in Healthcare",
+      "pagesLabel": "Expected Pages/Duration",
+      "pagesPlaceholder": "e.g., 100 pages or 6 months",
+      "generate": "Generate Plan",
+      "generating": "Generating...",
+      "result": "Generated Plan",
+      "usePlan": "Use This Plan",
+      "cancel": "Cancel"
+    },
+    "workSession": {
+      "title": "Log Work Session",
+      "durationLabel": "Duration (minutes)",
+      "focusLabel": "Focus Score",
+      "reflectionLabel": "Reflection/Notes",
+      "reflectionPlaceholder": "What did you accomplish? Any blockers?",
+      "cancel": "Cancel",
+      "save": "Save Session"
+    },
+    "moodTracker": {
+      "title": "Mood Tracker",
+      "howAreYou": "How are you feeling?",
+      "noteLabel": "Note (Optional)",
+      "notePlaceholder": "Add a note about your day...",
+      "history": "History",
+      "save": "Save Mood",
+      "cancel": "Cancel"
+    },
+    "wishlist": {
+      "title": "Wishlist",
+      "subtitle": "Long-term goals and ideas",
+      "addItem": "Add Item",
+      "newItemPlaceholder": "Enter wishlist item...",
+      "importance": "Importance",
+      "note": "Note",
+      "noItems": "No items yet. Add your first wish!"
+    },
+    "common": {
+      "close": "Close",
+      "save": "Save",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "edit": "Edit",
+      "confirm": "Confirm",
+      "loading": "Loading..."
+    }
+  },
+  "status": {
+    "pending": "Pending",
+    "inProgress": "In Progress",
+    "completed": "Completed",
+    "archived": "Archived"
+  },
+  "time": {
+    "minutes": "minutes",
+    "hours": "hours",
+    "days": "days",
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "tomorrow": "Tomorrow"
+  },
+  "language": {
+    "name": "Language",
+    "en": "English",
+    "zh": "中文"
+  }
+}

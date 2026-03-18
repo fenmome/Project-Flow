@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { X, Sparkles, Loader2, AlertCircle, GraduationCap, BookOpen } from 'lucide-react';
 import { generateThesisPlan } from '../services/geminiService';
 import { Project, TaskStatus } from '../types';
@@ -10,6 +11,7 @@ interface AIPlannerModalProps {
 }
 
 export const AIPlannerModal: React.FC<AIPlannerModalProps> = ({ isOpen, onClose, onCreate }) => {
+  const { t } = useTranslation();
   const [topic, setTopic] = useState('');
   const [level, setLevel] = useState('Master\'s');
   const [type, setType] = useState('Experimental');
@@ -76,7 +78,7 @@ export const AIPlannerModal: React.FC<AIPlannerModalProps> = ({ isOpen, onClose,
         <div className="flex justify-between items-center p-6 border-b border-slate-100 bg-gradient-to-r from-indigo-50 to-purple-50">
           <div className="flex items-center gap-2 text-indigo-900">
             <Sparkles size={20} className="text-purple-600" />
-            <h2 className="text-xl font-bold">AI Thesis Planner</h2>
+            <h2 className="text-xl font-bold">{t('modals.aiPlanner.title')}</h2>
           </div>
           <button onClick={onClose} disabled={isLoading} className="text-slate-400 hover:text-slate-600 transition-colors">
             <X size={24} />
