@@ -2,6 +2,7 @@
   "header": {
     "title": "ProjectFlow",
     "import": "导入",
+    "export": "导出",
     "autoSave": "自动保存",
     "saving": "保存中...",
     "autoSaveOn": "自动保存已开启",
@@ -11,14 +12,20 @@
     "doneTimeline": "完成时间线",
     "mood": "心情",
     "aiPlanner": "AI 规划",
-    "newProject": "新建项目"
+    "newProject": "新建项目",
+    "newFolder": "新建文件夹",
+    "addFolder": "添加文件夹",
+    "folderName": "文件夹名称"
   },
   "sidebar": {
     "projects": "项目",
     "allProjects": "全部项目",
     "archived": "已归档",
     "dailyTasks": "每日任务",
-    "addTask": "添加每日任务..."
+    "addTask": "添加每日任务...",
+    "uncategorized": "未分类",
+    "thesisProjects": "论文项目",
+    "techProjects": "技术项目"
   },
   "projectDetail": {
     "backToDashboard": "返回仪表盘",
@@ -52,7 +59,19 @@
     "markComplete": "标记完成",
     "markIncomplete": "标记未完成",
     "logWork": "记录工作",
-    "viewDetails": "查看详情"
+    "viewDetails": "查看详情",
+    "dailyWorkHours": "每日工作时长（小时）",
+    "chooseTemplate": "选择模板",
+    "version": "版本",
+    "tasks": "任务",
+    "todoList": "待办清单",
+    "addTodo": "添加待办...",
+    "estimatedMinutes": "预计分钟数",
+    "completedMinutes": "已完成分钟数",
+    "startTime": "开始时间",
+    "endTime": "结束时间",
+    "collapsed": "已折叠",
+    "uncategorized": "未分类"
   },
   "modals": {
     "newProject": {
@@ -62,6 +81,8 @@
       "descriptionLabel": "描述（可选）",
       "descriptionPlaceholder": "输入项目描述...",
       "deadlineLabel": "截止日期（可选）",
+      "dailyWorkHoursLabel": "每日工作时长（小时）",
+      "chooseTemplate": "选择模板",
       "cancel": "取消",
       "create": "创建项目"
     },
@@ -77,7 +98,21 @@
       "generating": "生成中...",
       "result": "生成的计划",
       "usePlan": "使用此计划",
-      "cancel": "取消"
+      "cancel": "取消",
+      "degreeLevel": "学位级别",
+      "researchType": "研究类型",
+      "researchTopic": "研究主题",
+      "bachelors": "本科",
+      "masters": "硕士",
+      "phd": "博士",
+      "experimental": "实验性",
+      "theoretical": "理论/数学",
+      "system": "系统/软件",
+      "literature": "文献综述",
+      "qualitative": "定性研究",
+      "note": "说明",
+      "aiNote": "Gemini 将根据您的学位级别和研究类型，为您的论文分配合适的阶段。",
+      "failed": "生成计划失败，请重试。"
     },
     "workSession": {
       "title": "记录工作时段",
@@ -86,7 +121,40 @@
       "reflectionLabel": "反思/备注",
       "reflectionPlaceholder": "完成了什么？遇到了什么障碍？",
       "cancel": "取消",
-      "save": "保存记录"
+      "save": "保存记录",
+      "workLog": "工作日志",
+      "editEntry": "编辑记录",
+      "logWork": "记录工作",
+      "history": "历史记录",
+      "dateTime": "日期和时间",
+      "plannedTime": "预计时间（分钟）",
+      "actualTime": "实际时间（分钟）",
+      "sessionGoal": "本次目标",
+      "tangibleOutput": "产出物",
+      "currentProblems": "当前存在的问题",
+      "nextSteps": "下一步行动",
+      "sessionReview": "工作回顾与反思",
+      "satisfaction": "满意度",
+      "focusLevel": "专注度",
+      "varianceBlockers": "偏差/阻碍",
+      "natureOfWork": "工作性质",
+      "otherRemarks": "其他备注",
+      "updateEntry": "更新记录",
+      "noLogs": "暂无工作记录",
+      "logFirst": "记录您的第一个工作时段",
+      "veryBad": "非常差",
+      "bad": "差",
+      "okay": "一般",
+      "good": "好",
+      "great": "非常好",
+      "goal": "目标",
+      "output": "产出",
+      "blockers": "阻碍",
+      "next": "下一步",
+      "whatAim": "您想实现什么目标？",
+      "outputPlaceholder": "您产出了什么具体成果？例如：起草了300字...",
+      "problemsPlaceholder": "您遇到了什么阻碍或问题？",
+      "nextStepsPlaceholder": "基于本次工作，您计划下一步做什么？"
     },
     "moodTracker": {
       "title": "心情追踪",
@@ -95,7 +163,30 @@
       "notePlaceholder": "添加关于您一天的备注...",
       "history": "历史记录",
       "save": "保存心情",
-      "cancel": "取消"
+      "cancel": "取消",
+      "subtitle": "长期目标和想法",
+      "addItem": "添加项目",
+      "newItemPlaceholder": "输入愿望清单项目...",
+      "importance": "重要性",
+      "note": "备注",
+      "noItems": "暂无项目。添加您的第一个愿望！",
+      "happy": "开心",
+      "sad": "难过",
+      "anxious": "焦虑",
+      "neutral": "一般",
+      "frustrated": "沮丧",
+      "excited": "兴奋",
+      "moodHistory": "心情历史",
+      "exportHistory": "导出历史",
+      "noMoods": "尚未记录心情",
+      "trackEmotional": "追踪您在论文期间的情绪历程",
+      "date": "日期",
+      "time": "时间",
+      "selectMood": "选择心情",
+      "customMood": "或输入自定义心情...",
+      "remarks": "备注/想法",
+      "whyFeel": "您为什么有这种感觉？有什么阻碍或收获？",
+      "recordMood": "记录心情"
     },
     "wishlist": {
       "title": "愿望清单",
@@ -104,7 +195,25 @@
       "newItemPlaceholder": "输入愿望清单项目...",
       "importance": "重要性",
       "note": "备注",
-      "noItems": "暂无项目。添加您的第一个愿望！"
+      "noItems": "暂无项目。添加您的第一个愿望！",
+      "low": "低",
+      "medium": "中",
+      "high": "高",
+      "startDate": "开始日期",
+      "endDate": "结束日期",
+      "deadline": "截止日期",
+      "longTerm": "长期",
+      "editItem": "编辑项目",
+      "addNote": "添加备注...",
+      "gridView": "网格视图",
+      "tableView": "表格视图",
+      "history": "历史记录",
+      "compare": "对比",
+      "settings": "设置",
+      "snapshot": "快照",
+      "revert": "恢复",
+      "moveUp": "上移",
+      "moveDown": "下移"
     },
     "common": {
       "close": "关闭",
@@ -114,13 +223,44 @@
       "edit": "编辑",
       "confirm": "确认",
       "loading": "加载中..."
+    },
+    "backup": {
+      "title": "版本历史与备份",
+      "subtitle": "创建进度快照或恢复之前的版本",
+      "saveCurrent": "保存当前状态",
+      "saveDescription": "在进行重大更改之前创建一个恢复点",
+      "newVersion": "新版本",
+      "savedVersions": "已保存版本",
+      "download": "下载 JSON",
+      "restore": "恢复",
+      "noBackups": "尚未保存备份",
+      "confirmDelete": "确定要删除此备份吗？",
+      "confirmRestore": "恢复 \"{name}\"？当前数据将被替换。"
+    },
+    "calendar": {
+      "title": "工作日历",
+      "hours": "小时",
+      "sessions": "个时段",
+      "noActivity": "无活动记录",
+      "goal": "目标",
+      "output": "产出",
+      "blockers": "阻碍",
+      "nextSteps": "下一步"
+    },
+    "timeline": {
+      "title": "完成时间线",
+      "subtitle": "您已完成的所有任务的历史记录",
+      "jumpToDate": "跳转到日期",
+      "noCompleted": "尚未有已完成的任务。继续加油！",
+      "timeSpent": "花费时间"
     }
   },
   "status": {
     "pending": "待处理",
     "inProgress": "进行中",
     "completed": "已完成",
-    "archived": "已归档"
+    "archived": "已归档",
+    "abandoned": "已放弃"
   },
   "time": {
     "minutes": "分钟",
@@ -128,11 +268,80 @@
     "days": "天",
     "today": "今天",
     "yesterday": "昨天",
-    "tomorrow": "明天"
+    "tomorrow": "明天",
+    "earlyMorning": "清晨",
+    "morning": "上午",
+    "noon": "中午",
+    "afternoon": "下午",
+    "evening": "傍晚",
+    "night": "晚上",
+    "lateNight": "凌晨",
+    "sun": "日",
+    "mon": "一",
+    "tue": "二",
+    "wed": "三",
+    "thu": "四",
+    "fri": "五",
+    "sat": "六"
   },
   "language": {
     "name": "语言",
     "en": "English",
     "zh": "中文"
+  },
+  "dailyLog": {
+    "title": "每日日志",
+    "addTask": "添加任务",
+    "taskDescription": "任务描述...",
+    "noTasks": "暂无任务",
+    "showDeadlines": "显示截止日期",
+    "hideDeadlines": "隐藏截止日期",
+    "ddlsOn": "截止开",
+    "ddlsOff": "截止关",
+    "exportLogs": "导出日志（JSON）",
+    "backToToday": "返回今天",
+    "loadPrevious": "加载更早",
+    "addingTo": "添加到",
+    "abandonTask": "放弃任务？",
+    "abandonReason": "您为什么放弃这个任务？",
+    "reasonPlaceholder": "原因（例如：改变了策略）...",
+    "keepTrying": "继续尝试",
+    "confirmAbandon": "确认放弃",
+    "deadline": "截止",
+    "noReason": "未提供原因",
+    "delete": "删除",
+    "markComplete": "标记完成",
+    "markAbandoned": "标记放弃",
+    "resetTodo": "重置为待办"
+  },
+  "errors": {
+    "failedToLoad": "加载失败"
+  },
+  "timeline": {
+    "unifiedTimeline": "统一时间线",
+    "legend": "图例（0-8小时刻度）",
+    "duration": "时长/天",
+    "history": "历史",
+    "forecast": "预测",
+    "dailyOverview": "每日概览",
+    "workLogged": "已记录工作",
+    "plannedTasks": "计划任务",
+    "noActivity": "无活动或计划",
+    "selectDate": "选择日期查看详情",
+    "done": "已完成"
+  },
+  "varianceReasons": {
+    "underestimated": "低估难度",
+    "technicalBlocker": "技术卡点",
+    "perfectionism": "完美主义",
+    "emotionalFriction": "情绪内耗",
+    "interruptions": "外部打断"
+  },
+  "workTags": {
+    "creation": "创作",
+    "optimization": "优化",
+    "review": "审阅",
+    "admin": "管理",
+    "research": "研究"
   }
 }

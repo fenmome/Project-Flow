@@ -66,7 +66,7 @@ export const AIPlannerModal: React.FC<AIPlannerModalProps> = ({ isOpen, onClose,
       setTopic('');
     } catch (err: any) {
       console.error(err);
-      setError("Failed to generate plan. Please try again.");
+      setError(t('modals.aiPlanner.failed'));
     } finally {
       setIsLoading(false);
     }
@@ -88,7 +88,7 @@ export const AIPlannerModal: React.FC<AIPlannerModalProps> = ({ isOpen, onClose,
         <div className="p-6 space-y-4">
            <div className="grid grid-cols-2 gap-4">
              <div>
-                <label className="block text-xs font-semibold uppercase text-slate-500 mb-1">Degree Level</label>
+                <label className="block text-xs font-semibold uppercase text-slate-500 mb-1">{t('modals.aiPlanner.degreeLevel')}</label>
                 <div className="relative">
                    <select 
                       value={level}
@@ -103,7 +103,7 @@ export const AIPlannerModal: React.FC<AIPlannerModalProps> = ({ isOpen, onClose,
                 </div>
              </div>
              <div>
-                <label className="block text-xs font-semibold uppercase text-slate-500 mb-1">Research Type</label>
+                <label className="block text-xs font-semibold uppercase text-slate-500 mb-1">{t('modals.aiPlanner.researchType')}</label>
                 <div className="relative">
                    <select 
                       value={type}
@@ -122,11 +122,11 @@ export const AIPlannerModal: React.FC<AIPlannerModalProps> = ({ isOpen, onClose,
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">Research Topic</label>
+            <label className="block text-sm font-medium text-slate-700 mb-2">{t('modals.aiPlanner.researchTopic')}</label>
             <textarea
               value={topic}
               onChange={(e) => setTopic(e.target.value)}
-              placeholder="e.g., Impact of Generative AI on Software Engineering Productivity..."
+              placeholder={t('modals.aiPlanner.topicPlaceholder')}
               className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none transition-all resize-none h-32"
               autoFocus
               disabled={isLoading}
@@ -141,7 +141,7 @@ export const AIPlannerModal: React.FC<AIPlannerModalProps> = ({ isOpen, onClose,
           )}
 
           <div className="bg-slate-50 p-4 rounded-lg text-xs text-slate-500">
-            <p><strong>Note:</strong> Gemini will structure your {level} thesis into phases appropriate for {type} research.</p>
+            <p><strong>{t('modals.aiPlanner.note')}:</strong> {t('modals.aiPlanner.aiNote')}</p>
           </div>
         </div>
 
@@ -151,7 +151,7 @@ export const AIPlannerModal: React.FC<AIPlannerModalProps> = ({ isOpen, onClose,
             disabled={isLoading}
             className="px-4 py-2 text-slate-600 font-medium hover:bg-slate-200 rounded-lg transition-colors disabled:opacity-50"
           >
-            Cancel
+            {t('modals.aiPlanner.cancel')}
           </button>
           <button
             onClick={handleGenerate}
@@ -160,11 +160,11 @@ export const AIPlannerModal: React.FC<AIPlannerModalProps> = ({ isOpen, onClose,
           >
             {isLoading ? (
               <>
-                <Loader2 size={16} className="animate-spin" /> Generating...
+                <Loader2 size={16} className="animate-spin" /> {t('modals.aiPlanner.generating')}
               </>
             ) : (
               <>
-                <Sparkles size={16} /> Generate Plan
+                <Sparkles size={16} /> {t('modals.aiPlanner.generate')}
               </>
             )}
           </button>

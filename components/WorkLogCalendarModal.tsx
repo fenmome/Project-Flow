@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { X, ChevronLeft, ChevronRight, Clock, Calendar as CalendarIcon, FileText, PackageCheck, Layers, Hash, FolderOpen, Target, AlertTriangle, Footprints } from 'lucide-react';
 import { Project, WorkSession, Folder } from '../types';
 
@@ -69,6 +70,7 @@ const DEFAULT_THEME = {
 };
 
 export const WorkLogCalendarModal: React.FC<WorkLogCalendarModalProps> = ({ isOpen, onClose, projects, folders }) => {
+  const { t } = useTranslation();
   const [displayDate, setDisplayDate] = useState(new Date());
   const [selectedDateStr, setSelectedDateStr] = useState<string>(getLocalYMD(new Date()));
 
@@ -229,7 +231,7 @@ export const WorkLogCalendarModal: React.FC<WorkLogCalendarModalProps> = ({ isOp
         {/* Top Bar: Header */}
         <div className="p-4 border-b border-slate-200 bg-white flex justify-between items-center">
              <h2 className="text-xl font-bold text-slate-800 flex items-center gap-2">
-               <CalendarIcon className="text-indigo-600" /> Work Calendar
+               <CalendarIcon className="text-indigo-600" /> {t('modals.calendar.title')}
              </h2>
              <button onClick={onClose} className="p-2 text-slate-400 hover:text-slate-600 rounded-full hover:bg-slate-100 transition-colors"><X size={20}/></button>
         </div>
@@ -322,10 +324,10 @@ export const WorkLogCalendarModal: React.FC<WorkLogCalendarModalProps> = ({ isOp
                     <div className="flex items-baseline gap-3 mb-4">
                         <h3 className="text-4xl font-bold text-slate-800">
                             {selectedDayStats.total > 0 ? (selectedDayStats.total / 60).toFixed(1) : '0'} 
-                            <span className="text-lg font-medium text-slate-400 ml-1">hours</span>
+                            <span className="text-lg font-medium text-slate-400 ml-1">{t('modals.calendar.hours')}</span>
                         </h3>
                         <span className="px-2 py-0.5 bg-slate-100 text-slate-600 text-xs font-bold rounded-full border border-slate-200">
-                            {selectedDaySessions.length} Sessions
+                            {selectedDaySessions.length} {t('modals.calendar.sessions')}
                         </span>
                     </div>
 
@@ -344,7 +346,7 @@ export const WorkLogCalendarModal: React.FC<WorkLogCalendarModalProps> = ({ isOp
                                 return (
                                     <div key={folderId} className="flex items-center gap-3 text-sm">
                                         <div className={`w-2.5 h-2.5 rounded-full ${theme.bg}`}></div>
-                                        <span className="text-slate-600 flex-1 truncate">{folder?.name || 'Uncategorized'}</span>
+                                        <span className="text-slate-600 flex-1 truncate">{folder?.name || t('sidebar.uncategorized')}</span>
                                         <div className="flex items-center gap-2">
                                             <div className="w-16 h-1.5 bg-slate-200 rounded-full overflow-hidden">
                                                 <div className={`h-full ${barColorClass.split(' ')[0]}`} style={{ width: `${percent}%` }}></div>
@@ -362,7 +364,7 @@ export const WorkLogCalendarModal: React.FC<WorkLogCalendarModalProps> = ({ isOp
                     {selectedDaySessions.length === 0 ? (
                         <div className="h-full flex flex-col items-center justify-center text-slate-400 opacity-60">
                             <Clock size={48} className="mb-2 stroke-1"/>
-                            <p className="text-sm font-medium">No activity recorded.</p>
+                            <p className="text-sm font-medium">{t('modals.calendar.noActivity')}</p>
                         </div>
                     ) : (
                         selectedDaySessions.map((session, idx) => {

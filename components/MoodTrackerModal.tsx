@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { X, Smile, Frown, Meh, CloudRain, Zap, Heart, Calendar, Clock, Send, Trash2, Plus, Download } from 'lucide-react';
 import { MoodEntry } from '../types';
 
@@ -10,21 +11,24 @@ interface MoodTrackerModalProps {
   onDeleteMood: (id: string) => void;
 }
 
-const PRESET_MOODS = [
-  { label: 'Happy', icon: Smile, color: 'text-green-600 bg-green-50 border-green-200' },
-  { label: 'Sad', icon: CloudRain, color: 'text-blue-600 bg-blue-50 border-blue-200' },
-  { label: 'Anxious', icon: Zap, color: 'text-amber-600 bg-amber-50 border-amber-200' },
-  { label: 'Neutral', icon: Meh, color: 'text-slate-600 bg-slate-50 border-slate-200' },
-  { label: 'Frustrated', icon: Frown, color: 'text-red-600 bg-red-50 border-red-200' },
-  { label: 'Excited', icon: Heart, color: 'text-pink-600 bg-pink-50 border-pink-200' },
+const getPresetMoods = (t: any) => [
+  { label: t('modals.moodTracker.happy'), icon: Smile, color: 'text-green-600 bg-green-50 border-green-200' },
+  { label: t('modals.moodTracker.sad'), icon: CloudRain, color: 'text-blue-600 bg-blue-50 border-blue-200' },
+  { label: t('modals.moodTracker.anxious'), icon: Zap, color: 'text-amber-600 bg-amber-50 border-amber-200' },
+  { label: t('modals.moodTracker.neutral'), icon: Meh, color: 'text-slate-600 bg-slate-50 border-slate-200' },
+  { label: t('modals.moodTracker.frustrated'), icon: Frown, color: 'text-red-600 bg-red-50 border-red-200' },
+  { label: t('modals.moodTracker.excited'), icon: Heart, color: 'text-pink-600 bg-pink-50 border-pink-200' },
 ];
 
 export const MoodTrackerModal: React.FC<MoodTrackerModalProps> = ({ isOpen, onClose, moods, onAddMood, onDeleteMood }) => {
+  const { t } = useTranslation();
   const [selectedMood, setSelectedMood] = useState<string>('');
   const [customMood, setCustomMood] = useState<string>('');
   const [note, setNote] = useState('');
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
+
+  const PRESET_MOODS = getPresetMoods(t);
 
   // Initialize time when modal opens
   useEffect(() => {
@@ -77,7 +81,8 @@ export const MoodTrackerModal: React.FC<MoodTrackerModalProps> = ({ isOpen, onCl
   };
 
   const getMoodConfig = (moodLabel: string) => {
-    return PRESET_MOODS.find(m => m.label.toLowerCase() === moodLabel.toLowerCase()) || 
+    const presets = getPresetMoods(t);
+    return presets.find(m => m.label.toLowerCase() === moodLabel.toLowerCase()) ||
            { label: moodLabel, icon: Smile, color: 'text-indigo-600 bg-indigo-50 border-indigo-200' };
   };
 
@@ -92,13 +97,13 @@ export const MoodTrackerModal: React.FC<MoodTrackerModalProps> = ({ isOpen, onCl
         <div className="w-full md:w-5/12 bg-slate-50 border-r border-slate-200 flex flex-col h-full">
             <div className="p-4 border-b border-slate-200 bg-white/50 backdrop-blur-sm sticky top-0 z-10 flex justify-between items-center">
                 <h3 className="font-bold text-slate-800 flex items-center gap-2">
-                    <HistoryIcon /> Mood History
+                    <HistoryIcon /> {t('modals.moodTracker.moodHistory')}
                 </h3>
                 {moods.length > 0 && (
                     <button 
                         onClick={handleExport}
                         className="text-slate-400 hover:text-indigo-600 hover:bg-slate-100 p-1.5 rounded transition-colors"
-                        title="Export History"
+                        title={t('modals.moodTracker.exportHistory')}
                     >
                         <Download size={16} />
                     </button>
@@ -109,7 +114,7 @@ export const MoodTrackerModal: React.FC<MoodTrackerModalProps> = ({ isOpen, onCl
                 {sortedMoods.length === 0 ? (
                     <div className="text-center text-slate-400 mt-20">
                         <Smile size={48} className="mx-auto mb-2 opacity-20" />
-                        <p className="text-sm">No moods recorded yet.</p>
+                        <p className="text-sm">{t('modals.moodTracker.noMoods')}</p>
                     </div>
                 ) : (
                     <div className="space-y-6 border-l-2 border-indigo-100 ml-3 pl-6 relative">
@@ -158,22 +163,22 @@ export const MoodTrackerModal: React.FC<MoodTrackerModalProps> = ({ isOpen, onCl
 
             <div className="p-8 flex flex-col h-full overflow-y-auto">
                 <div className="mb-6">
-                    <h2 className="text-2xl font-bold text-slate-800 mb-1">How are you feeling?</h2>
-                    <p className="text-slate-500 text-sm">Track your emotional journey during your thesis.</p>
+                    <h2 className="text-2xl font-bold text-slate-800 mb-1">{t('modals.moodTracker.howAreYou')}</h2>
+                    <p className="text-slate-500 text-sm">{t('modals.moodTracker.trackEmotional')}</p>
                 </div>
 
                 <div className="space-y-6 flex-1">
                     {/* Date Time Inputs */}
                     <div className="grid grid-cols-2 gap-4">
                         <div className="space-y-1">
-                            <label className="text-xs font-bold text-slate-500 uppercase">Date</label>
+                            <label className="text-xs font-bold text-slate-500 uppercase">{t('modals.moodTracker.date')}</label>
                             <div className="relative">
                                 <input type="date" value={date} onChange={e => setDate(e.target.value)} className="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm font-medium outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400" />
                                 <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
                             </div>
                         </div>
                         <div className="space-y-1">
-                            <label className="text-xs font-bold text-slate-500 uppercase">Time</label>
+                            <label className="text-xs font-bold text-slate-500 uppercase">{t('modals.moodTracker.time')}</label>
                             <div className="relative">
                                 <input type="time" value={time} onChange={e => setTime(e.target.value)} className="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm font-medium outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400" />
                                 <Clock className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
@@ -183,7 +188,7 @@ export const MoodTrackerModal: React.FC<MoodTrackerModalProps> = ({ isOpen, onCl
 
                     {/* Mood Selector */}
                     <div className="space-y-2">
-                        <label className="text-xs font-bold text-slate-500 uppercase">Select Mood</label>
+                        <label className="text-xs font-bold text-slate-500 uppercase">{t('modals.moodTracker.selectMood')}</label>
                         <div className="grid grid-cols-3 gap-3">
                             {PRESET_MOODS.map(preset => {
                                 const isSelected = selectedMood === preset.label;
@@ -206,9 +211,9 @@ export const MoodTrackerModal: React.FC<MoodTrackerModalProps> = ({ isOpen, onCl
                             <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
                                 <Plus size={16} />
                             </div>
-                            <input 
-                                type="text" 
-                                placeholder="Or type a custom mood..." 
+                            <input
+                                type="text"
+                                placeholder={t('modals.moodTracker.customMood')} 
                                 value={customMood}
                                 onChange={e => { setCustomMood(e.target.value); setSelectedMood(''); }}
                                 className={`w-full pl-9 pr-3 py-2.5 rounded-lg border outline-none text-sm transition-all ${customMood ? 'border-indigo-500 ring-2 ring-indigo-100' : 'border-slate-200 bg-slate-50 focus:bg-white focus:border-indigo-400'}`}
@@ -218,24 +223,24 @@ export const MoodTrackerModal: React.FC<MoodTrackerModalProps> = ({ isOpen, onCl
 
                     {/* Notes */}
                     <div className="space-y-2">
-                        <label className="text-xs font-bold text-slate-500 uppercase">Remarks / Thoughts</label>
-                        <textarea 
+                        <label className="text-xs font-bold text-slate-500 uppercase">{t('modals.moodTracker.remarks')}</label>
+                        <textarea
                             value={note}
                             onChange={e => setNote(e.target.value)}
                             className="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-400 text-sm min-h-[100px] resize-none"
-                            placeholder="Why do you feel this way? Any blockers or wins?"
+                            placeholder={t('modals.moodTracker.whyFeel')}
                         />
                     </div>
                 </div>
 
                 {/* Footer Submit */}
                 <div className="mt-6 pt-6 border-t border-slate-100">
-                    <button 
+                    <button
                         onClick={handleSubmit}
                         disabled={!selectedMood && !customMood}
                         className="w-full py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white rounded-xl font-bold shadow-lg shadow-indigo-200 flex items-center justify-center gap-2 transition-all disabled:opacity-50 disabled:shadow-none"
                     >
-                        <Send size={18} /> Record Mood
+                        <Send size={18} /> {t('modals.moodTracker.recordMood')}
                     </button>
                 </div>
             </div>

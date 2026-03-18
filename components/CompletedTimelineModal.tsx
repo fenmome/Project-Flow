@@ -1,5 +1,6 @@
 
 import React, { useState, useMemo, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { X, CheckCircle2, Search, Clock, ChevronDown, ChevronRight, Layers, FolderOpen, Timer } from 'lucide-react';
 import { Project, TaskStatus } from '../types';
 
@@ -20,6 +21,7 @@ interface CompletedItem {
 }
 
 export const CompletedTimelineModal: React.FC<CompletedTimelineModalProps> = ({ isOpen, onClose, projects }) => {
+  const { t } = useTranslation();
   const [targetDate, setTargetDate] = useState('');
   const [collapsedDates, setCollapsedDates] = useState<Set<string>>(new Set());
 
@@ -93,7 +95,7 @@ export const CompletedTimelineModal: React.FC<CompletedTimelineModalProps> = ({ 
       });
       setTimeout(() => element?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
     } else {
-        alert("No completed tasks found around this date.");
+        alert(t('modals.timeline.noCompleted'));
     }
   };
 
@@ -132,22 +134,22 @@ export const CompletedTimelineModal: React.FC<CompletedTimelineModalProps> = ({ 
                 <CheckCircle2 size={24} />
             </div>
             <div>
-                <h2 className="text-xl font-bold text-slate-800">Completion Timeline</h2>
-                <p className="text-xs text-slate-500">A history of everything you've accomplished.</p>
+                <h2 className="text-xl font-bold text-slate-800">{t('modals.timeline.title')}</h2>
+                <p className="text-xs text-slate-500">{t('modals.timeline.subtitle')}</p>
             </div>
           </div>
-          
+
           <div className="flex items-center gap-2 bg-white p-1 rounded-lg border border-slate-200 shadow-sm">
-            <input 
+            <input
                 type="date"
                 value={targetDate}
                 onChange={(e) => setTargetDate(e.target.value)}
                 className="text-xs border-none outline-none text-slate-600 bg-transparent px-2"
             />
-            <button 
+            <button
                 onClick={handleJumpToDate}
                 className="p-1.5 bg-emerald-50 text-emerald-600 hover:bg-emerald-100 rounded-md transition-colors"
-                title="Jump to date"
+                title={t('modals.timeline.jumpToDate')}
             >
                 <Search size={16} />
             </button>
@@ -163,7 +165,7 @@ export const CompletedTimelineModal: React.FC<CompletedTimelineModalProps> = ({ 
             {timelineData.length === 0 ? (
                 <div className="h-full flex flex-col items-center justify-center text-slate-400 opacity-60">
                     <CheckCircle2 size={48} className="mb-4 stroke-1"/>
-                    <p>No completed tasks yet. Keep going!</p>
+                    <p>{t('modals.timeline.noCompleted')}</p>
                 </div>
             ) : (
                 <div className="max-w-3xl mx-auto relative border-l-2 border-slate-100 space-y-6 pl-6 pb-10 ml-4">
@@ -231,6 +233,7 @@ export const CompletedTimelineModal: React.FC<CompletedTimelineModalProps> = ({ 
                                                     <Timer size={12}/>
                                                     {formatTimeSpent(item.timeSpent)}
                                                 </div>
+
                                             </div>
                                         ))}
                                     </div>

@@ -4,6 +4,15 @@ import { useTranslation } from 'react-i18next';
 import { X, Gift, Plus, Calendar, ChevronDown, ChevronRight, MessageSquare, Clock, Trash2, CheckCircle2, Circle, Tag, Filter, Infinity as InfinityIcon, AlertCircle, Download, Table, Settings, Save, History, GitCompare, ArrowRight, ArrowLeft, ArrowUp, ArrowDown, RotateCcw, AlertTriangle } from 'lucide-react';
 import { WishlistItem, WishlistAnnotation, WishlistDeadlineType, GridConfig, GridSnapshot } from '../types';
 
+// Helper to get translated deadline labels
+const getDeadlineLabels = (t: any) => ({
+    longTerm: t('modals.wishlist.longTerm'),
+    noDeadline: t('modals.common.noDeadline'),
+    endOfYear: (year: number) => `${t('time.year')} ${year}`,
+    daysLeft: (days: number) => `${days} ${t('time.daysLeft')}`,
+    overdue: t('time.overdue')
+});
+
 interface WishlistModalProps {
   isOpen: boolean;
   onClose: () => void;

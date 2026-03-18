@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Project, TaskStatus, Subtask } from '../types';
 import { Calendar as CalendarIcon, CheckCircle2, AlertTriangle, ChevronLeft, ChevronRight, Clock, History, TrendingUp, BarChart2, PackageCheck } from 'lucide-react';
 
@@ -25,6 +26,7 @@ interface ActiveTaskContext {
 }
 
 export const Timeline: React.FC<TimelineProps> = ({ project }) => {
+  const { t } = useTranslation();
   const [displayDate, setDisplayDate] = useState(new Date());
   
   // Helper to get local YYYY-MM-DD
@@ -193,7 +195,9 @@ export const Timeline: React.FC<TimelineProps> = ({ project }) => {
 
   const todayStr = getDateKey(new Date());
   
-  const WEEKDAYS = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+  const getWeekdays = () => [
+    t('time.sun'), t('time.mon'), t('time.tue'), t('time.wed'), t('time.thu'), t('time.fri'), t('time.sat')
+  ];
 
   // Color Helpers - Fixed 0-8h Scale
   // Buckets:
@@ -227,8 +231,8 @@ export const Timeline: React.FC<TimelineProps> = ({ project }) => {
       <div className="p-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
         <div className="flex items-center gap-2">
             <h3 className="font-bold text-slate-800 flex items-center gap-2">
-                <CalendarIcon size={18} className="text-indigo-600"/> 
-                Unified Timeline
+                <CalendarIcon size={18} className="text-indigo-600"/>
+                {t('timeline.unifiedTimeline')}
             </h3>
         </div>
 
@@ -246,7 +250,7 @@ export const Timeline: React.FC<TimelineProps> = ({ project }) => {
           <div className="w-1/2 p-4 border-r border-slate-100 flex flex-col">
              {/* Weekday Header */}
              <div className="grid grid-cols-7 mb-2">
-                 {WEEKDAYS.map(d => (
+                 {getWeekdays().map(d => (
                      <div key={d} className="text-center text-[10px] font-bold text-slate-400 py-1 uppercase tracking-wider">{d}</div>
                  ))}
              </div>
@@ -311,12 +315,12 @@ export const Timeline: React.FC<TimelineProps> = ({ project }) => {
              {/* Detailed Legend */}
              <div className="mt-4 bg-slate-50 p-3 rounded-xl border border-slate-100 flex flex-col gap-3">
                  <div className="flex justify-between items-end border-b border-slate-200 pb-2">
-                    <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Legend (0-8h Scale)</span>
-                    <span className="text-[10px] text-slate-400">Duration / Day</span>
+                    <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">{t('timeline.legend')}</span>
+                    <span className="text-[10px] text-slate-400">{t('timeline.duration')}</span>
                  </div>
                  
                  <div className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 text-[10px]">
-                    <span className="text-slate-500 font-medium self-center">History</span>
+                    <span className="text-slate-500 font-medium self-center">{t('timeline.history')}</span>
                     <div className="flex items-center gap-1">
                         <div className="w-5 h-5 rounded bg-emerald-200 flex items-center justify-center text-[8px] text-emerald-700 cursor-help" title="< 2 hours"></div>
                         <div className="w-5 h-5 rounded bg-emerald-300 flex items-center justify-center text-[8px] text-emerald-800 cursor-help" title="2 - 4 hours"></div>
@@ -325,7 +329,7 @@ export const Timeline: React.FC<TimelineProps> = ({ project }) => {
                         <div className="w-5 h-5 rounded bg-emerald-800 flex items-center justify-center text-[8px] text-white cursor-help" title="8+ hours"></div>
                     </div>
 
-                    <span className="text-slate-500 font-medium self-center">Forecast</span>
+                    <span className="text-slate-500 font-medium self-center">{t('timeline.forecast')}</span>
                     <div className="flex items-center gap-1">
                         <div className="w-5 h-5 rounded bg-indigo-200 flex items-center justify-center text-[8px] text-indigo-700 cursor-help" title="< 2 hours"></div>
                         <div className="w-5 h-5 rounded bg-indigo-300 flex items-center justify-center text-[8px] text-indigo-800 cursor-help" title="2 - 4 hours"></div>
@@ -353,7 +357,7 @@ export const Timeline: React.FC<TimelineProps> = ({ project }) => {
                         {new Date(selectedDateStr).toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' })}
                      </span>
                      <span className="text-xs font-semibold text-slate-400 mt-0.5">
-                        Daily Overview
+                        {t('timeline.dailyOverview')}
                      </span>
                  </h4>
              </div>
@@ -373,7 +377,7 @@ export const Timeline: React.FC<TimelineProps> = ({ project }) => {
                                 <div className="animate-in fade-in slide-in-from-left-4 duration-300">
                                     <div className="flex items-center justify-between mb-2">
                                         <h5 className="text-xs font-bold text-emerald-700 uppercase flex items-center gap-1">
-                                            <History size={14}/> Work Logged
+                                            <History size={14}/> {t('timeline.workLogged')}
                                         </h5>
                                         <span className="text-xs font-bold bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full">
                                             {(history.totalMinutes / 60).toFixed(1)}h
@@ -411,7 +415,7 @@ export const Timeline: React.FC<TimelineProps> = ({ project }) => {
                                 <div className="animate-in fade-in slide-in-from-right-4 duration-300">
                                     <div className="flex items-center justify-between mb-2">
                                         <h5 className="text-xs font-bold text-indigo-700 uppercase flex items-center gap-1">
-                                            <TrendingUp size={14}/> Planned Tasks
+                                            <TrendingUp size={14}/> {t('timeline.plannedTasks')}
                                         </h5>
                                         <span className="text-xs font-bold bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded-full">
                                             {(schedule.totalMinutes / 60).toFixed(1)}h
@@ -422,7 +426,7 @@ export const Timeline: React.FC<TimelineProps> = ({ project }) => {
                                             <div key={idx} className="bg-white p-3 rounded-xl border border-indigo-100 shadow-sm hover:border-indigo-300 transition-colors relative overflow-hidden">
                                                 {task.isFinished && (
                                                     <div className="absolute right-0 top-0 bg-green-500 text-white text-[9px] px-1.5 py-0.5 rounded-bl font-bold">
-                                                        DONE
+                                                        {t('timeline.done')}
                                                     </div>
                                                 )}
                                                 <div className="text-[9px] text-slate-400 font-bold uppercase tracking-wider mb-1 truncate">{task.taskName}</div>

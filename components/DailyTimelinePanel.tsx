@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
 import ReactDOM from 'react-dom';
+import { useTranslation } from 'react-i18next';
 import { CheckCircle2, Circle, Plus, Calendar, Trash2, Target, ChevronDown, ChevronRight, AlertOctagon, Ban, Download, CalendarClock, Flag, Eye, EyeOff } from 'lucide-react';
 import { DailyTask, Project, TaskStatus } from '../types';
 
@@ -17,18 +18,18 @@ const getLocalYMD = (d: Date) => {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 };
 
-const TIME_OF_DAY_OPTIONS = [
-    { label: '上午 (Morning)', value: 'Morning' },
-    { label: '中午 (Noon)', value: 'Noon' },
-    { label: '下午 (Afternoon)', value: 'Afternoon' },
-    { label: '傍晚 (Evening)', value: 'Evening' },
-    { label: '晚上 (Night)', value: 'Night' },
-    { label: '凌晨 (Late Night)', value: 'Late Night' },
+const getTimeOfDayOptions = (t: any) => [
+    { label: `${t('time.morning')} (Morning)`, value: 'Morning' },
+    { label: `${t('time.noon')} (Noon)`, value: 'Noon' },
+    { label: `${t('time.afternoon')} (Afternoon)`, value: 'Afternoon' },
+    { label: `${t('time.evening')} (Evening)`, value: 'Evening' },
+    { label: `${t('time.night')} (Night)`, value: 'Night' },
+    { label: `${t('time.lateNight')} (Late Night)`, value: 'Late Night' },
 ];
 
-const getTimeOrder = (timeOfDay?: string) => {
-    const idx = TIME_OF_DAY_OPTIONS.findIndex(opt => opt.value === timeOfDay);
-    return idx === -1 ? 0 : idx; // Default to Morning priority if unknown
+const getTimeOrder = (timeOfDay?: string, t?: any) => {
+    const idx = getTimeOfDayOptions(t).findIndex(opt => opt.value === timeOfDay);
+    return idx === -1 ? 0 : idx;
 };
 
 interface MergedItem {
@@ -47,6 +48,7 @@ interface MergedItem {
 }
 
 export const DailyTimelinePanel: React.FC<DailyTimelinePanelProps> = ({ tasks, projects, onAddTask, onToggleTask, onUpdateTask, onDeleteTask, onAbandonTask }) => {
+  const { t } = useTranslation();
   const [anchorDate, setAnchorDate] = useState(new Date());
   const [newTaskText, setNewTaskText] = useState('');
   const [selectedTimeOfDay, setSelectedTimeOfDay] = useState('Morning');
@@ -248,29 +250,29 @@ export const DailyTimelinePanel: React.FC<DailyTimelinePanelProps> = ({ tasks, p
                 className="bg-white p-6 rounded-2xl shadow-2xl border border-red-100 w-full max-w-xs animate-in zoom-in-95 duration-200"
                 onClick={(e) => e.stopPropagation()}
               >
-                  <h4 className="text-lg font-bold text-red-600 mb-2 flex items-center gap-2"><AlertOctagon size={20}/> Abandon Task?</h4>
-                  <p className="text-sm text-slate-500 mb-3">Why are you giving up on this task?</p>
-                  <textarea 
+                  <h4 className="text-lg font-bold text-red-600 mb-2 flex items-center gap-2"><AlertOctagon size={20}/> {t('dailyLog.abandonTask')}</h4>
+                  <p className="text-sm text-slate-500 mb-3">{t('dailyLog.abandonReason')}</p>
+                  <textarea
                       autoFocus
                       value={abandonNote}
                       onChange={e => setAbandonNote(e.target.value)}
-                      placeholder="Reason (e.g. Changed strategy)..."
+                      placeholder={t('dailyLog.reasonPlaceholder')}
                       className="w-full text-sm p-3 border border-slate-200 rounded-xl mb-4 h-24 resize-none outline-none focus:border-red-300 focus:ring-2 focus:ring-red-100 bg-red-50/30"
                   />
                   <div className="flex justify-end gap-2">
-                      <button 
+                      <button
                         type="button"
-                        onClick={() => setAbandoningTaskId(null)} 
+                        onClick={() => setAbandoningTaskId(null)}
                         className="text-sm text-slate-600 hover:bg-slate-100 px-3 py-2 rounded-lg font-medium transition-colors"
                       >
-                        Keep Trying
+                        {t('dailyLog.keepTrying')}
                       </button>
-                      <button 
+                      <button
                         type="button"
-                        onClick={confirmAbandon} 
+                        onClick={confirmAbandon}
                         className="text-sm bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 font-bold shadow-lg shadow-red-200 transition-colors cursor-pointer"
                       >
-                        Confirm Abandon
+                        {t('dailyLog.confirmAbandon')}
                       </button>
                   </div>
               </div>
@@ -281,27 +283,27 @@ export const DailyTimelinePanel: React.FC<DailyTimelinePanelProps> = ({ tasks, p
       {/* Header */}
       <div className="flex items-center justify-between px-4 mb-3 shrink-0">
         <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-2">
-            <Calendar size={14} className="text-indigo-500"/> Daily Log
+            <Calendar size={14} className="text-indigo-500"/> {t('dailyLog.title')}
         </h3>
         <div className="flex items-center gap-1">
             <button 
                 onClick={() => setShowDeadlines(!showDeadlines)}
-                title={showDeadlines ? "Hide Deadlines" : "Show Deadlines"}
+                title={showDeadlines ? t('dailyLog.hideDeadlines') : t('dailyLog.showDeadlines')}
                 className={`p-1.5 rounded transition-colors flex items-center gap-1 text-[10px] font-medium border ${showDeadlines ? 'bg-amber-50 text-amber-600 border-amber-200' : 'text-slate-400 hover:text-indigo-600 border-transparent hover:bg-indigo-50'}`}
             >
-                {showDeadlines ? <Eye size={14}/> : <EyeOff size={14} />} {showDeadlines ? 'DDLs On' : 'DDLs Off'}
+                {showDeadlines ? <Eye size={14}/> : <EyeOff size={14} />} {showDeadlines ? t('dailyLog.ddlsOn') : t('dailyLog.ddlsOff')}
             </button>
             <div className="w-px h-3 bg-slate-200 mx-1"></div>
-            <button 
+            <button
                 onClick={handleExport}
-                title="Export Logs (JSON)"
+                title={t('dailyLog.exportLogs')}
                 className="p-1.5 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded transition-colors"
             >
                 <Download size={14} />
             </button>
-            <button 
-                onClick={() => setAnchorDate(new Date())} 
-                title="Back to Today"
+            <button
+                onClick={() => setAnchorDate(new Date())}
+                title={t('dailyLog.backToToday')}
                 className="p-1.5 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded transition-colors"
             >
                 <Target size={14} />
@@ -492,7 +494,7 @@ export const DailyTimelinePanel: React.FC<DailyTimelinePanelProps> = ({ tasks, p
                     newAnchor.setDate(newAnchor.getDate() - 30);
                     setAnchorDate(newAnchor);
                 }} className="text-[10px] text-slate-400 hover:text-indigo-600 bg-slate-50 px-3 py-1 rounded-full">
-                    Load Previous
+                    {t('dailyLog.loadPrevious')}
                 </button>
             </div>
         </div>
@@ -503,7 +505,7 @@ export const DailyTimelinePanel: React.FC<DailyTimelinePanelProps> = ({ tasks, p
         {/* Date Context Display */}
         <div className="flex justify-between items-center px-1">
             <span className="text-[10px] font-bold text-indigo-500 uppercase flex items-center gap-1">
-                Adding to: {anchorDate.toLocaleDateString()}
+                {t('dailyLog.addingTo')}: {anchorDate.toLocaleDateString()}
             </span>
         </div>
 
@@ -523,7 +525,7 @@ export const DailyTimelinePanel: React.FC<DailyTimelinePanelProps> = ({ tasks, p
                     value={newTaskText}
                     onChange={(e) => setNewTaskText(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleAdd()}
-                    placeholder="Task description..."
+                    placeholder={t('dailyLog.taskDescription')}
                     className="w-full text-xs pl-3 pr-8 py-2 rounded-lg border border-slate-200 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none bg-slate-50 focus:bg-white transition-colors"
                 />
                 <button 

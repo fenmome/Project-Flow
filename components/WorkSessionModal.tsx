@@ -14,30 +14,30 @@ interface WorkSessionModalProps {
   initialDuration?: number;
 }
 
-const TIME_PERIODS = [
-  { id: 'Early Morning', label: '清晨', icon: Sunrise, range: [4, 8] },
-  { id: 'Morning', label: '上午', icon: Sun, range: [8, 12] },
-  { id: 'Noon', label: '中午', icon: Sun, range: [12, 14] },
-  { id: 'Afternoon', label: '下午', icon: Sun, range: [14, 18] },
-  { id: 'Evening', label: '傍晚', icon: Sunset, range: [18, 20] },
-  { id: 'Night', label: '晚上', icon: Moon, range: [20, 24] },
-  { id: 'Late Night', label: '凌晨', icon: Moon, range: [0, 4] },
+const getTimePeriods = (t: any) => [
+  { id: 'Early Morning', label: t('time.earlyMorning'), icon: Sunrise, range: [4, 8] },
+  { id: 'Morning', label: t('time.morning'), icon: Sun, range: [8, 12] },
+  { id: 'Noon', label: t('time.noon'), icon: Sun, range: [12, 14] },
+  { id: 'Afternoon', label: t('time.afternoon'), icon: Sun, range: [14, 18] },
+  { id: 'Evening', label: t('time.evening'), icon: Sunset, range: [18, 20] },
+  { id: 'Night', label: t('time.night'), icon: Moon, range: [20, 24] },
+  { id: 'Late Night', label: t('time.lateNight'), icon: Moon, range: [0, 4] },
 ];
 
-const VARIANCE_REASONS = [
-  { id: 'Underestimated', label: '低估难度', icon: BrainCircuit, color: 'text-amber-600 bg-amber-50 border-amber-200' },
-  { id: 'Technical Blocker', label: '技术卡点', icon: AlertOctagon, color: 'text-red-600 bg-red-50 border-red-200' },
-  { id: 'Perfectionism', label: '完美主义', icon: ZapOff, color: 'text-purple-600 bg-purple-50 border-purple-200' },
-  { id: 'Emotional Friction', label: '情绪内耗', icon: HeartCrack, color: 'text-pink-600 bg-pink-50 border-pink-200' },
-  { id: 'Interruptions', label: '外部打断', icon: HourglassIcon, color: 'text-blue-600 bg-blue-50 border-blue-200' },
+const getVarianceReasons = (t: any) => [
+  { id: 'Underestimated', label: t('varianceReasons.underestimated'), icon: BrainCircuit, color: 'text-amber-600 bg-amber-50 border-amber-200' },
+  { id: 'Technical Blocker', label: t('varianceReasons.technicalBlocker'), icon: AlertOctagon, color: 'text-red-600 bg-red-50 border-red-200' },
+  { id: 'Perfectionism', label: t('varianceReasons.perfectionism'), icon: ZapOff, color: 'text-purple-600 bg-purple-50 border-purple-200' },
+  { id: 'Emotional Friction', label: t('varianceReasons.emotionalFriction'), icon: HeartCrack, color: 'text-pink-600 bg-pink-50 border-pink-200' },
+  { id: 'Interruptions', label: t('varianceReasons.interruptions'), icon: HourglassIcon, color: 'text-blue-600 bg-blue-50 border-blue-200' },
 ];
 
-const SATISFACTION_LEVELS = [
-    { score: 1, icon: Angry, label: 'Very Bad' },
-    { score: 2, icon: Frown, label: 'Bad' },
-    { score: 3, icon: Meh, label: 'Okay' },
-    { score: 4, icon: Smile, label: 'Good' },
-    { score: 5, icon: Laugh, label: 'Great' },
+const getSatisfactionLevels = (t: any) => [
+    { score: 1, icon: Angry, label: t('modals.workSession.veryBad') },
+    { score: 2, icon: Frown, label: t('modals.workSession.bad') },
+    { score: 3, icon: Meh, label: t('modals.workSession.okay') },
+    { score: 4, icon: Smile, label: t('modals.workSession.good') },
+    { score: 5, icon: Laugh, label: t('modals.workSession.great') },
 ];
 
 // Helper to get local YYYY-MM-DD string correctly
@@ -81,8 +81,7 @@ export const WorkSessionModal: React.FC<WorkSessionModalProps> = ({
   const [newVarianceInput, setNewVarianceInput] = useState('');
   const [notes, setNotes] = useState('');
 
-  // Default Tags if project is empty
-  const DEFAULT_TAGS = ['Creation', 'Optimization', 'Review', 'Admin', 'Research'];
+  const DEFAULT_TAGS = [t('workTags.creation'), t('workTags.optimization'), t('workTags.review'), t('workTags.admin'), t('workTags.research')];
   const suggestTags = useMemo(() => {
     const combined = new Set([...DEFAULT_TAGS, ...allProjectTags]);
     return Array.from(combined).filter(t => !selectedTags.includes(t));
@@ -90,7 +89,8 @@ export const WorkSessionModal: React.FC<WorkSessionModalProps> = ({
 
   const getAutoTimePeriod = () => {
     const hour = new Date().getHours();
-    const period = TIME_PERIODS.find(p => {
+    const periods = getTimePeriods(t);
+    const period = periods.find(p => {
         if (p.id === 'Late Night' && hour >= 0 && hour < 4) return true;
         return hour >= p.range[0] && hour < p.range[1];
     });
@@ -237,7 +237,7 @@ export const WorkSessionModal: React.FC<WorkSessionModalProps> = ({
         {/* Header */}
         <div className="p-4 border-b border-slate-100 flex justify-between items-start bg-slate-50">
           <div>
-            <h2 className="text-lg font-bold text-slate-800 leading-tight">Work Log</h2>
+            <h2 className="text-lg font-bold text-slate-800 leading-tight">{t('modals.workSession.workLog')}</h2>
             <p className="text-xs text-slate-500 mt-1 truncate max-w-[300px]">{subtask.title}</p>
           </div>
           <button onClick={onClose} className="p-1 text-slate-400 hover:text-slate-600 rounded hover:bg-slate-200 transition-colors"><X size={20}/></button>
@@ -245,17 +245,17 @@ export const WorkSessionModal: React.FC<WorkSessionModalProps> = ({
 
         {/* Tabs */}
         <div className="flex border-b border-slate-100">
-          <button 
+          <button
             onClick={() => setActiveTab('log')}
             className={`flex-1 py-3 text-sm font-medium flex items-center justify-center gap-2 transition-colors ${activeTab === 'log' ? 'text-indigo-600 border-b-2 border-indigo-600 bg-indigo-50/50' : 'text-slate-500 hover:bg-slate-50'}`}
           >
-            {editingSessionId ? <Edit2 size={16}/> : <Plus size={16}/>} {editingSessionId ? 'Edit Entry' : 'Log Work'}
+            {editingSessionId ? <Edit2 size={16}/> : <Plus size={16}/>} {editingSessionId ? t('modals.workSession.editEntry') : t('modals.workSession.logWork')}
           </button>
-          <button 
+          <button
             onClick={() => { setActiveTab('history'); resetForm(); }}
             className={`flex-1 py-3 text-sm font-medium flex items-center justify-center gap-2 transition-colors ${activeTab === 'history' ? 'text-indigo-600 border-b-2 border-indigo-600 bg-indigo-50/50' : 'text-slate-500 hover:bg-slate-50'}`}
           >
-            <History size={16}/> History <span className="bg-slate-200 text-slate-600 px-1.5 py-0.5 rounded-full text-[10px]">{subtask.sessions?.length || 0}</span>
+            <History size={16}/> {t('modals.workSession.history')} <span className="bg-slate-200 text-slate-600 px-1.5 py-0.5 rounded-full text-[10px]">{subtask.sessions?.length || 0}</span>
           </button>
         </div>
 
@@ -269,18 +269,18 @@ export const WorkSessionModal: React.FC<WorkSessionModalProps> = ({
               <div className="space-y-4">
                   <div className="grid grid-cols-1 gap-4">
                     <div>
-                        <label className="block text-xs font-bold text-slate-500 uppercase mb-1.5">Date & Time</label>
+                        <label className="block text-xs font-bold text-slate-500 uppercase mb-1.5">{t('modals.workSession.dateTime')}</label>
                         <div className="flex gap-2">
                              <div className="relative flex-1">
                                 <input type="date" value={date} onChange={e => setDate(e.target.value)} className="w-full pl-9 pr-3 py-2 rounded-lg border border-slate-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none text-sm font-medium text-slate-700" />
                                 <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
                             </div>
-                            <select 
-                                value={timeOfDay} 
+                            <select
+                                value={timeOfDay}
                                 onChange={e => setTimeOfDay(e.target.value)}
                                 className="px-3 py-2 rounded-lg border border-slate-200 text-sm bg-white focus:border-indigo-500 focus:ring-2 outline-none"
                             >
-                                {TIME_PERIODS.map(p => <option key={p.id} value={p.id}>{p.label}</option>)}
+                                {getTimePeriods(t).map(p => <option key={p.id} value={p.id}>{p.label}</option>)}
                             </select>
                         </div>
                     </div>
@@ -289,7 +289,7 @@ export const WorkSessionModal: React.FC<WorkSessionModalProps> = ({
                   {/* Row 2: Duration Comparison */}
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                        <label className="block text-xs font-bold text-slate-500 uppercase mb-1.5">Planned Time (Min)</label>
+                        <label className="block text-xs font-bold text-slate-500 uppercase mb-1.5">{t('modals.workSession.plannedTime')}</label>
                         <div className="relative">
                             <input 
                                 type="number" 
@@ -303,7 +303,7 @@ export const WorkSessionModal: React.FC<WorkSessionModalProps> = ({
                         </div>
                     </div>
                     <div>
-                        <label className="block text-xs font-bold text-slate-500 uppercase mb-1.5">Actual Time (Min)</label>
+                        <label className="block text-xs font-bold text-slate-500 uppercase mb-1.5">{t('modals.workSession.actualTime')}</label>
                         <div className="relative">
                             <input 
                                 type="number" 
@@ -322,52 +322,52 @@ export const WorkSessionModal: React.FC<WorkSessionModalProps> = ({
               {/* Session Goal */}
               <div className="bg-indigo-50/50 p-4 rounded-xl border border-indigo-100">
                 <label className="flex items-center gap-2 text-xs font-bold text-indigo-700 uppercase mb-2">
-                    <Target size={16}/> Session Goal (本次目标)
+                    <Target size={16}/> {t('modals.workSession.sessionGoal')}
                 </label>
-                <textarea 
-                  value={goal} 
-                  onChange={e => setGoal(e.target.value)} 
-                  className="w-full px-3 py-2 rounded-lg border border-indigo-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none text-sm min-h-[60px] resize-none bg-white placeholder:text-indigo-300/70 text-slate-700" 
-                  placeholder="What did you aim to achieve?"
+                <textarea
+                  value={goal}
+                  onChange={e => setGoal(e.target.value)}
+                  className="w-full px-3 py-2 rounded-lg border border-indigo-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none text-sm min-h-[60px] resize-none bg-white placeholder:text-indigo-300/70 text-slate-700"
+                  placeholder={t('modals.workSession.whatAim')}
                 />
               </div>
 
               {/* Concrete Output */}
               <div className="bg-emerald-50/50 p-4 rounded-xl border border-emerald-100">
                 <label className="flex items-center gap-2 text-xs font-bold text-emerald-700 uppercase mb-2">
-                    <PackageCheck size={16}/> Tangible Output (产出物)
+                    <PackageCheck size={16}/> {t('modals.workSession.tangibleOutput')}
                 </label>
-                <textarea 
-                  value={output} 
-                  onChange={e => setOutput(e.target.value)} 
-                  className="w-full px-3 py-2 rounded-lg border border-emerald-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 outline-none text-sm min-h-[60px] resize-none bg-white placeholder:text-emerald-300/70 text-slate-700" 
-                  placeholder="What concrete thing did you produce? e.g. Drafted 300 words..."
+                <textarea
+                  value={output}
+                  onChange={e => setOutput(e.target.value)}
+                  className="w-full px-3 py-2 rounded-lg border border-emerald-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 outline-none text-sm min-h-[60px] resize-none bg-white placeholder:text-emerald-300/70 text-slate-700"
+                  placeholder={t('modals.workSession.outputPlaceholder')}
                 />
               </div>
 
               {/* Current Problems */}
               <div className="bg-rose-50/50 p-4 rounded-xl border border-rose-100">
                 <label className="flex items-center gap-2 text-xs font-bold text-rose-700 uppercase mb-2">
-                    <AlertTriangle size={16}/> Current Problems (当前存在的问题)
+                    <AlertTriangle size={16}/> {t('modals.workSession.currentProblems')}
                 </label>
-                <textarea 
-                  value={problems} 
-                  onChange={e => setProblems(e.target.value)} 
-                  className="w-full px-3 py-2 rounded-lg border border-rose-200 focus:border-rose-500 focus:ring-2 focus:ring-rose-200 outline-none text-sm min-h-[60px] resize-none bg-white placeholder:text-rose-300/70 text-slate-700" 
-                  placeholder="What blockers or issues did you encounter?"
+                <textarea
+                  value={problems}
+                  onChange={e => setProblems(e.target.value)}
+                  className="w-full px-3 py-2 rounded-lg border border-rose-200 focus:border-rose-500 focus:ring-2 focus:ring-rose-200 outline-none text-sm min-h-[60px] resize-none bg-white placeholder:text-rose-300/70 text-slate-700"
+                  placeholder={t('modals.workSession.problemsPlaceholder')}
                 />
               </div>
 
               {/* Next Steps */}
               <div className="bg-blue-50/50 p-4 rounded-xl border border-blue-100">
                 <label className="flex items-center gap-2 text-xs font-bold text-blue-700 uppercase mb-2">
-                    <Footprints size={16}/> Next Steps (下一步行动)
+                    <Footprints size={16}/> {t('modals.workSession.nextSteps')}
                 </label>
-                <textarea 
-                  value={nextSteps} 
-                  onChange={e => setNextSteps(e.target.value)} 
-                  className="w-full px-3 py-2 rounded-lg border border-blue-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none text-sm min-h-[60px] resize-none bg-white placeholder:text-blue-300/70 text-slate-700" 
-                  placeholder="What do you plan to do next based on this session?"
+                <textarea
+                  value={nextSteps}
+                  onChange={e => setNextSteps(e.target.value)}
+                  className="w-full px-3 py-2 rounded-lg border border-blue-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none text-sm min-h-[60px] resize-none bg-white placeholder:text-blue-300/70 text-slate-700"
+                  placeholder={t('modals.workSession.nextStepsPlaceholder')}
                 />
               </div>
 

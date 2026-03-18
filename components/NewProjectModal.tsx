@@ -132,7 +132,7 @@ export const NewProjectModal: React.FC<NewProjectModalProps> = ({ isOpen, onClos
                   </div>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Daily Work (Hours)</label>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">{t('projectDetail.dailyWorkHours')}</label>
                   <div className="relative">
                     <input
                       type="number"
@@ -150,7 +150,7 @@ export const NewProjectModal: React.FC<NewProjectModalProps> = ({ isOpen, onClos
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-3">Choose Template</label>
+            <label className="block text-sm font-medium text-slate-700 mb-3">{t('projectDetail.chooseTemplate')}</label>
             <div className="grid grid-cols-2 gap-4">
               {templates.map(tpl => {
                   const isSelected = selectedTemplateId === tpl.id;

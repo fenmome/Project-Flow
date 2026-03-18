@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { X, History, Save, RotateCcw, Trash2, Edit2, Check, Download, AlertTriangle } from 'lucide-react';
 import { Project, Folder, DailyTask, MoodEntry, BackupData } from '../types';
 
@@ -15,6 +16,7 @@ interface BackupHistoryModalProps {
 }
 
 export const BackupHistoryModal: React.FC<BackupHistoryModalProps> = ({ isOpen, onClose, currentState, onRestore }) => {
+  const { t } = useTranslation();
   const [backups, setBackups] = useState<BackupData[]>([]);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editName, setEditName] = useState('');
@@ -54,14 +56,14 @@ export const BackupHistoryModal: React.FC<BackupHistoryModalProps> = ({ isOpen, 
   };
 
   const handleDelete = (id: string) => {
-    if (confirm("Are you sure you want to delete this backup?")) {
+    if (confirm(t('modals.backup.confirmDelete'))) {
       const updated = backups.filter(b => b.id !== id);
       saveBackupsToStorage(updated);
     }
   };
 
   const handleRestore = (backup: BackupData) => {
-    if (confirm(`Restore "${backup.name}"? Current data will be replaced.`)) {
+    if (confirm(t('modals.backup.confirmRestore').replace('{name}', backup.name))) {
       onRestore(backup.data);
       onClose();
     }
@@ -103,9 +105,9 @@ export const BackupHistoryModal: React.FC<BackupHistoryModalProps> = ({ isOpen, 
         <div className="p-6 border-b border-slate-100 bg-slate-50 flex justify-between items-center">
           <div>
             <h2 className="text-xl font-bold text-slate-800 flex items-center gap-2">
-              <History className="text-orange-500" /> Version History & Backups
+              <History className="text-orange-500" /> {t('modals.backup.title')}
             </h2>
-            <p className="text-xs text-slate-500 mt-1">Create snapshots of your progress or restore previous versions.</p>
+            <p className="text-xs text-slate-500 mt-1">{t('modals.backup.subtitle')}</p>
           </div>
           <button onClick={onClose} className="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-200 rounded-full transition-colors">
             <X size={20} />
@@ -118,25 +120,25 @@ export const BackupHistoryModal: React.FC<BackupHistoryModalProps> = ({ isOpen, 
                 <div className="flex items-center gap-3">
                     <div className="bg-white p-2 rounded-lg shadow-sm text-orange-500"><Save size={20}/></div>
                     <div>
-                        <h4 className="font-bold text-orange-900 text-sm">Save Current State</h4>
-                        <p className="text-xs text-orange-700/70">Create a restore point before making big changes.</p>
+                        <h4 className="font-bold text-orange-900 text-sm">{t('modals.backup.saveCurrent')}</h4>
+                        <p className="text-xs text-orange-700/70">{t('modals.backup.saveDescription')}</p>
                     </div>
                 </div>
-                <button 
+                <button
                     onClick={handleCreateBackup}
                     className="px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white text-sm font-bold rounded-lg shadow-sm transition-colors flex items-center gap-2"
                 >
-                    <PlusIcon /> New Version
+                    <PlusIcon /> {t('modals.backup.newVersion')}
                 </button>
             </div>
 
             <div className="space-y-3">
-                <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Saved Versions ({backups.length})</h3>
-                
+                <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">{t('modals.backup.savedVersions')} ({backups.length})</h3>
+
                 {backups.length === 0 && (
                     <div className="text-center py-10 text-slate-400 border-2 border-dashed border-slate-100 rounded-xl">
                         <History size={32} className="mx-auto mb-2 opacity-30"/>
-                        <p>No backups saved yet.</p>
+                        <p>{t('modals.backup.noBackups')}</p>
                     </div>
                 )}
 
@@ -174,24 +176,26 @@ export const BackupHistoryModal: React.FC<BackupHistoryModalProps> = ({ isOpen, 
                         </div>
 
                         <div className="flex items-center gap-2">
-                            <button 
+                            <button
                                 onClick={() => exportBackup(backup)}
                                 className="p-2 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors"
-                                title="Download JSON"
+                                title={t('modals.backup.download')}
                             >
                                 <Download size={18} />
                             </button>
-                            <button 
+
+                            <button
                                 onClick={() => handleRestore(backup)}
                                 className="px-3 py-1.5 bg-slate-100 hover:bg-indigo-600 hover:text-white text-slate-600 text-xs font-bold rounded-lg transition-colors flex items-center gap-1"
-                                title="Restore this version"
+                                title={t('modals.backup.restore')}
                             >
-                                <RotateCcw size={14} /> Restore
+                                <RotateCcw size={14} /> {t('modals.backup.restore')}
                             </button>
-                            <button 
+
+                            <button
                                 onClick={() => handleDelete(backup.id)}
                                 className="p-2 text-slate-300 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
-                                title="Delete Backup"
+                                title={t('modals.common.delete')}
                             >
                                 <Trash2 size={18} />
                             </button>
