@@ -210,7 +210,7 @@ export const WorkSessionModal: React.FC<WorkSessionModalProps> = ({
     if (!trimmed) return;
     
     // Check if user typed a predefined label exactly (case-insensitive)
-    const predefined = VARIANCE_REASONS.find(r => r.label.toLowerCase() === trimmed.toLowerCase());
+    const predefined = getVarianceReasons(t).find(r => r.label.toLowerCase() === trimmed.toLowerCase());
     const val = predefined ? predefined.id : trimmed;
 
     if (!varianceReasons.includes(val)) {
@@ -379,7 +379,7 @@ export const WorkSessionModal: React.FC<WorkSessionModalProps> = ({
                  <div>
                     <label className="block text-xs font-bold text-slate-500 uppercase mb-2">Satisfaction (满意度)</label>
                     <div className="flex justify-between gap-2">
-                        {SATISFACTION_LEVELS.map((level) => {
+                        {getSatisfactionLevels(t).map((level) => {
                             const Icon = level.icon;
                             const isSelected = satisfactionScore === level.score;
                             return (
@@ -420,7 +420,7 @@ export const WorkSessionModal: React.FC<WorkSessionModalProps> = ({
                     <div className="p-3 border border-slate-200 rounded-lg bg-white focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-200 transition-all">
                         <div className="flex flex-wrap gap-2 mb-2">
                             {varianceReasons.map(rId => {
-                                const r = VARIANCE_REASONS.find(vr => vr.id === rId);
+                                const r = getVarianceReasons(t).find(vr => vr.id === rId);
                                 if (r) {
                                     return (
                                         <span key={r.id} className={`inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-medium ${r.color}`}>
@@ -448,7 +448,7 @@ export const WorkSessionModal: React.FC<WorkSessionModalProps> = ({
 
                     {/* Suggestions */}
                     <div className="mt-2 flex flex-wrap gap-2">
-                        {VARIANCE_REASONS.filter(r => !varianceReasons.includes(r.id)).map(reason => (
+                        {getVarianceReasons(t).filter(r => !varianceReasons.includes(r.id)).map(reason => (
                              <button
                                 key={reason.id}
                                 onClick={() => addVarianceReason(reason.id)}
@@ -516,8 +516,8 @@ export const WorkSessionModal: React.FC<WorkSessionModalProps> = ({
                   // Sort: Newest Date First, then Newest Created First (for same day entries)
                   .sort((a, b) => (b.date - a.date) || ((b.createdAt || 0) - (a.createdAt || 0)))
                   .map(session => {
-                    const periodLabel = TIME_PERIODS.find(p => p.id === session.timeOfDay)?.label || session.timeOfDay;
-                    const SatIcon = SATISFACTION_LEVELS.find(s => s.score === (session.satisfactionScore || 3))?.icon || Meh;
+                    const periodLabel = getTimePeriods(t).find(p => p.id === session.timeOfDay)?.label || session.timeOfDay;
+                    const SatIcon = getSatisfactionLevels(t).find(s => s.score === (session.satisfactionScore || 3))?.icon || Meh;
                     
                     return (
                         <div key={session.id} className="bg-white border border-slate-200 rounded-xl p-3 shadow-sm hover:border-indigo-300 transition-colors group">
@@ -590,7 +590,7 @@ export const WorkSessionModal: React.FC<WorkSessionModalProps> = ({
                             {session.varianceReasons && session.varianceReasons.length > 0 && (
                                 <div className="flex flex-wrap gap-1.5 mb-2">
                                     {session.varianceReasons.map(vid => {
-                                        const r = VARIANCE_REASONS.find(vr => vr.id === vid);
+                                        const r = getVarianceReasons(t).find(vr => vr.id === vid);
                                         if(!r) {
                                             return (
                                                 <span key={vid} className="text-[10px] px-1.5 py-0.5 rounded border flex items-center gap-1 bg-slate-50 text-slate-500 border-slate-200">

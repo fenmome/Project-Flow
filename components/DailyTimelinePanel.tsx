@@ -510,12 +510,12 @@ export const DailyTimelinePanel: React.FC<DailyTimelinePanelProps> = ({ tasks, p
         </div>
 
         <div className="flex gap-2">
-            <select 
+            <select
                 value={selectedTimeOfDay}
                 onChange={(e) => setSelectedTimeOfDay(e.target.value)}
                 className="text-xs px-2 py-2 rounded-lg border border-slate-200 bg-slate-50 focus:border-indigo-500 focus:bg-white outline-none w-24 shrink-0"
             >
-                {TIME_OF_DAY_OPTIONS.map(opt => (
+                {getTimeOfDayOptions(t).map(opt => (
                     <option key={opt.value} value={opt.value}>{opt.label.split(' ')[0]}</option>
                 ))}
             </select>
