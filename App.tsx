@@ -1476,12 +1476,12 @@ const App: React.FC = () => {
                  }} className="flex items-center gap-2 text-slate-500 hover:text-indigo-600 px-3 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-slate-50"><Download size={16} /> <span className="hidden sm:inline">{t('header.backup')}</span></button>
               </>
             )}
-            <button onClick={() => setIsWishlistOpen(true)} className="flex items-center gap-2 bg-pink-50 hover:bg-pink-100 text-pink-600 px-4 py-2 rounded-lg text-sm font-medium transition-colors border border-pink-200"><Gift size={16} /> <span className="hidden sm:inline">{t('header.wishlist')}</span></button>
-            <button onClick={() => setIsCalendarModalOpen(true)} className="flex items-center gap-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-600 px-4 py-2 rounded-lg text-sm font-medium transition-colors border border-indigo-200"><Calendar size={16} /> <span className="hidden sm:inline">{t('header.calendar')}</span></button>
-            <button onClick={() => setIsCompletedTimelineOpen(true)} className="flex items-center gap-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-600 px-4 py-2 rounded-lg text-sm font-medium transition-colors border border-emerald-200"><CheckCircle2 size={16} /> <span className="hidden sm:inline">{t('header.doneTimeline')}</span></button>
-            <button onClick={() => setIsMoodModalOpen(true)} className="flex items-center gap-2 bg-pink-50 hover:bg-pink-100 text-pink-600 px-4 py-2 rounded-lg text-sm font-medium transition-colors border border-pink-200"><Smile size={16} /> <span className="hidden sm:inline">{t('header.mood')}</span></button>
-            <button onClick={() => setIsAIModalOpen(true)} className="flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all shadow-lg shadow-indigo-200"><Sparkles size={16} /> <span className="hidden sm:inline">{t('header.aiPlanner')}</span></button>
-            <button onClick={() => setIsModalOpen(true)} className="flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors shadow-lg shadow-slate-200"><Plus size={16} /> <span className="hidden sm:inline">{t('header.newProject')}</span></button>
+            <button onClick={() => setIsWishlistOpen(true)} className="flex items-center gap-2 bg-pink-50 hover:bg-pink-100 text-pink-600 px-4 py-2 rounded-lg text-sm font-medium transition-colors border border-pink-200 whitespace-nowrap"><Gift size={16} /> <span className="hidden sm:inline">{t('header.wishlist')}</span></button>
+            <button onClick={() => setIsCalendarModalOpen(true)} className="flex items-center gap-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-600 px-4 py-2 rounded-lg text-sm font-medium transition-colors border border-indigo-200 whitespace-nowrap"><Calendar size={16} /> <span className="hidden sm:inline">{t('header.calendar')}</span></button>
+            <button onClick={() => setIsCompletedTimelineOpen(true)} className="flex items-center gap-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-600 px-4 py-2 rounded-lg text-sm font-medium transition-colors border border-emerald-200 whitespace-nowrap"><CheckCircle2 size={16} /> <span className="hidden sm:inline">{t('header.doneTimeline')}</span></button>
+            <button onClick={() => setIsMoodModalOpen(true)} className="flex items-center gap-2 bg-pink-50 hover:bg-pink-100 text-pink-600 px-4 py-2 rounded-lg text-sm font-medium transition-colors border border-pink-200 whitespace-nowrap"><Smile size={16} /> <span className="hidden sm:inline">{t('header.mood')}</span></button>
+            <button onClick={() => setIsAIModalOpen(true)} className="flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all shadow-lg shadow-indigo-200 whitespace-nowrap"><Sparkles size={16} /> <span className="hidden sm:inline">{t('header.aiPlanner')}</span></button>
+            <button onClick={() => setIsModalOpen(true)} className="flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors shadow-lg shadow-slate-200 whitespace-nowrap"><Plus size={16} /> <span className="hidden sm:inline">{t('header.newProject')}</span></button>
           </div>
         </div>
       </header>
@@ -1885,10 +1885,10 @@ const App: React.FC = () => {
                                                 {editingDateId?.id === version.id && editingDateId?.type === 'end' ? (
                                                     <input type="date" autoFocus className="bg-white border rounded px-1" value={version.deadline ? toLocalDateString(version.deadline) : ""} onBlur={() => setEditingDateId(null)} onChange={(e) => updateVersion(activeProject.id, version.id, { deadline: handleDateChange(e.target.value) })} onClick={e => e.stopPropagation()} />
                                                 ) : (
-                                                    <span>{version.deadline ? `${new Date(version.deadline).toLocaleDateString()} ${vTime?.expired ? '(Overdue)' : ''}` : "Set End"}</span>
+                                                    <span>{version.deadline ? `${new Date(version.deadline).toLocaleDateString()} ${vTime?.expired ? `(${t('common.overdue')})` : ''}` : t('common.setEnd')}</span>
                                                 )}
                                             </div>
-                                            <button onClick={() => toggleSetNotes(expandedVersionNotes, version.id, setExpandedVersionNotes)} className={`text-[10px] flex items-center gap-1 ${version.notes ? 'text-indigo-600' : 'text-slate-400 hover:text-indigo-500'}`}><FileText size={12} /> Notes</button>
+                                            <button onClick={() => toggleSetNotes(expandedVersionNotes, version.id, setExpandedVersionNotes)} className={`text-[10px] flex items-center gap-1 ${version.notes ? 'text-indigo-600' : 'text-slate-400 hover:text-indigo-500'}`}><FileText size={12} /> {t('common.notes')}</button>
                                         </div>
                                     </div>
                                 </div>
@@ -1905,7 +1905,7 @@ const App: React.FC = () => {
                             {(isNotesExpanded || (version.notes && !isNotesExpanded)) && (
                                 <div className="px-4 py-2 bg-slate-50 border-b border-slate-200">
                                     {isNotesExpanded ? (
-                                        <div className="relative"><textarea value={version.notes || ''} onChange={(e) => updateVersion(activeProject.id, version.id, { notes: e.target.value })} className="w-full text-sm p-2 rounded border border-indigo-200 outline-none min-h-[60px]" placeholder="Version remarks..." autoFocus /><div className="absolute bottom-2 right-2"><button onClick={() => toggleSetNotes(expandedVersionNotes, version.id, setExpandedVersionNotes)} className="bg-indigo-600 text-white text-[10px] px-2 py-1 rounded">Done</button></div></div>
+                                        <div className="relative"><textarea value={version.notes || ''} onChange={(e) => updateVersion(activeProject.id, version.id, { notes: e.target.value })} className="w-full text-sm p-2 rounded border border-indigo-200 outline-none min-h-[60px]" placeholder={t('common.versionRemarks')} autoFocus /><div className="absolute bottom-2 right-2"><button onClick={() => toggleSetNotes(expandedVersionNotes, version.id, setExpandedVersionNotes)} className="bg-indigo-600 text-white text-[10px] px-2 py-1 rounded">{t('common.done')}</button></div></div>
                                     ) : (
                                         <div className="flex gap-2 items-start cursor-pointer" onClick={() => toggleSetNotes(expandedVersionNotes, version.id, setExpandedVersionNotes)}><FileText size={12} className="shrink-0 mt-0.5 text-indigo-400" /><p className="text-xs text-slate-600 whitespace-pre-wrap">{version.notes}</p></div>
                                     )}
@@ -1937,7 +1937,7 @@ const App: React.FC = () => {
                                                             <div className="bg-green-100 p-1 rounded-full text-green-600"><CheckCircle2 size={16} /></div>
                                                             <div><h3 className="font-bold text-slate-500 line-through text-sm">{task.title}</h3></div>
                                                         </div>
-                                                        <button onClick={() => toggleTaskStatus(activeProject.id, version.id, task)} className="text-xs text-indigo-600 hover:bg-indigo-50 px-2 py-1 rounded flex gap-1"><RotateCcw size={12} /> Reopen</button>
+                                                        <button onClick={() => toggleTaskStatus(activeProject.id, version.id, task)} className="text-xs text-indigo-600 hover:bg-indigo-50 px-2 py-1 rounded flex gap-1"><RotateCcw size={12} /> {t('common.reopen')}</button>
                                                     </div>
                                                 );
                                             }
@@ -1970,7 +1970,7 @@ const App: React.FC = () => {
                                                                     <Calendar size={10} />
                                                                     {editingDateId?.id === task.id && editingDateId?.type === 'start' ? (
                                                                         <input type="date" autoFocus className="w-20" value={task.startTime ? toLocalDateString(task.startTime) : toLocalDateString(Date.now())} onBlur={() => setEditingDateId(null)} onChange={(e) => updateTask(activeProject.id, version.id, task.id, { startTime: handleDateChange(e.target.value) })} onClick={e => e.stopPropagation()} />
-                                                                    ) : (<span>{task.startTime ? new Date(task.startTime).toLocaleDateString(undefined, {month:'short', day:'numeric'}) : "Start"}</span>)}
+                                                                    ) : (<span>{task.startTime ? new Date(task.startTime).toLocaleDateString(undefined, {month:'short', day:'numeric'}) : t('common.start')}</span>)}
                                                                 </div>
                                                                 <div className="flex items-center px-0.5">
                                                                     <span className="text-[8px] text-slate-300 mr-0.5">{getDaysDiff(task.startTime, task.deadline)}d</span>
@@ -1980,7 +1980,7 @@ const App: React.FC = () => {
                                                                     <CalendarClock size={10} />
                                                                     {editingDateId?.id === task.id && editingDateId?.type === 'end' ? (
                                                                         <input type="date" autoFocus className="w-20" value={task.deadline ? toLocalDateString(task.deadline) : ""} onBlur={() => setEditingDateId(null)} onChange={(e) => updateTask(activeProject.id, version.id, task.id, { deadline: handleDateChange(e.target.value) })} onClick={e => e.stopPropagation()} />
-                                                                    ) : (<span>{task.deadline ? new Date(task.deadline).toLocaleDateString(undefined, {month:'short', day:'numeric'}) : "End"}</span>)}
+                                                                    ) : (<span>{task.deadline ? new Date(task.deadline).toLocaleDateString(undefined, {month:'short', day:'numeric'}) : t('common.end')}</span>)}
                                                                 </div>
                                                             </div>
                                                             <div className="w-6 h-6 ml-2"><PieChart width={24} height={24}><Pie data={isTaskEmpty ? [{value:1}] : pieData} dataKey="value" innerRadius={6} outerRadius={12} stroke="none"><Cell fill={isTaskEmpty ? "#e2e8f0" : "#6366f1"} /><Cell fill="#cbd5e1" /></Pie></PieChart></div>
@@ -1998,7 +1998,7 @@ const App: React.FC = () => {
                                                     {(expandedTaskNotes.has(task.id) || (task.notes && !expandedTaskNotes.has(task.id))) && (
                                                         <div className="px-6 py-2 border-b border-slate-100 bg-slate-50/50">
                                                             {expandedTaskNotes.has(task.id) ? (
-                                                                <div className="relative"><textarea value={task.notes || ''} onChange={(e) => updateTask(activeProject.id, version.id, task.id, { notes: e.target.value })} className="w-full text-xs p-2 rounded border border-indigo-200 min-h-[60px]" placeholder="Category remarks..." autoFocus /><button onClick={() => toggleSetNotes(expandedTaskNotes, task.id, setExpandedTaskNotes)} className="absolute bottom-2 right-2 bg-indigo-600 text-white text-[10px] px-2 py-1 rounded">Done</button></div>
+                                                                <div className="relative"><textarea value={task.notes || ''} onChange={(e) => updateTask(activeProject.id, version.id, task.id, { notes: e.target.value })} className="w-full text-xs p-2 rounded border border-indigo-200 min-h-[60px]" placeholder={t('common.categoryRemarks')} autoFocus /><button onClick={() => toggleSetNotes(expandedTaskNotes, task.id, setExpandedTaskNotes)} className="absolute bottom-2 right-2 bg-indigo-600 text-white text-[10px] px-2 py-1 rounded">{t('common.done')}</button></div>
                                                             ) : (
                                                                 <div className="flex gap-2 items-start cursor-pointer" onClick={() => toggleSetNotes(expandedTaskNotes, task.id, setExpandedTaskNotes)}><FileText size={12} className="shrink-0 mt-0.5 text-yellow-500" /><p className="text-xs text-slate-600 whitespace-pre-wrap">{task.notes}</p></div>
                                                             )}
@@ -2043,7 +2043,7 @@ const App: React.FC = () => {
                                                                             </div>
                                                                             {/* Removed Timer Button Here */}
                                                                             <button onClick={() => setSessionModal({ versionId: version.id, taskId: task.id, subtaskId: subtask.id, isOpen: true })} className="p-1 text-slate-300 hover:text-indigo-500 rounded"><ClipboardList size={14} /></button>
-                                                                            <button onClick={() => handleAddSubtaskToTodo(version.id, task.id, subtask)} className="p-1 text-slate-300 hover:text-indigo-500 rounded" title="Pin to Todo List"><ListTodo size={14} /></button>
+                                                                            <button onClick={() => handleAddSubtaskToTodo(version.id, task.id, subtask)} className="p-1 text-slate-300 hover:text-indigo-500 rounded" title={t('common.pinToTodoList')}><ListTodo size={14} /></button>
                                                                             <button onClick={() => toggleSetNotes(expandedNotes, subtask.id, setExpandedNotes)} className={`p-1 rounded ${subtask.notes || isNotesExp ? 'text-indigo-500' : 'text-slate-300 hover:text-indigo-500'}`}><FileText size={14} /></button>
                                                                             <button onClick={() => setDetailModal({ versionId: version.id, taskId: task.id, subtaskId: subtask.id, isOpen: true })} className="text-slate-300 hover:text-indigo-500 p-1"><BarChart3 size={14} /></button>
                                                                             <button onClick={(e) => deleteSubtask(e, activeProject.id, version.id, task.id, subtask.id)} className="text-slate-300 hover:text-red-500 p-1"><Trash2 size={14} /></button>
@@ -2101,12 +2101,12 @@ const App: React.FC = () => {
                                                                                         onChange={(e) => updateSubtask(activeProject.id, version.id, task.id, subtask.id, { deadline: handleDateChange(e.target.value) })} 
                                                                                     />
                                                                                 ) : (
-                                                                                    <span>{subtask.deadline ? new Date(subtask.deadline).toLocaleDateString(undefined, {month:'short', day:'numeric'}) : "Set DDL"}</span>
+                                                                                    <span>{subtask.deadline ? new Date(subtask.deadline).toLocaleDateString(undefined, {month:'short', day:'numeric'}) : t('common.setDDL')}</span>
                                                                                 )}
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                    {isNotesExp && (<div className="pl-8 mt-2 relative"><textarea value={subtask.notes || ''} onChange={e => updateSubtask(activeProject.id, version.id, task.id, subtask.id, { notes: e.target.value })} className="w-full text-xs p-2 border rounded min-h-[60px]" placeholder="Task memo..." autoFocus /><button onClick={() => toggleSetNotes(expandedNotes, subtask.id, setExpandedNotes)} className="absolute bottom-2 right-2 bg-indigo-600 text-white text-[9px] px-2 py-0.5 rounded">Save</button></div>)}
+                                                                    {isNotesExp && (<div className="pl-8 mt-2 relative"><textarea value={subtask.notes || ''} onChange={e => updateSubtask(activeProject.id, version.id, task.id, subtask.id, { notes: e.target.value })} className="w-full text-xs p-2 border rounded min-h-[60px]" placeholder={t('common.taskMemo')} autoFocus /><button onClick={() => toggleSetNotes(expandedNotes, subtask.id, setExpandedNotes)} className="absolute bottom-2 right-2 bg-indigo-600 text-white text-[9px] px-2 py-0.5 rounded">{t('common.save')}</button></div>)}
                                                                     {!isNotesExp && subtask.notes && (<div className="pl-8 mt-1 cursor-pointer group" onClick={() => toggleSetNotes(expandedNotes, subtask.id, setExpandedNotes)}><div className="bg-slate-50 p-1.5 rounded border border-slate-100 text-[10px] text-slate-600 group-hover:border-indigo-200">{subtask.notes}</div></div>)}
                                                                 </div>
                                                             );
@@ -2116,7 +2116,7 @@ const App: React.FC = () => {
                                                         {completedSubtasks.length > 0 && (
                                                             <div className="bg-slate-50 border-t border-slate-100">
                                                                 <div className="px-4 py-1 text-[10px] font-bold text-slate-400 uppercase tracking-wider bg-slate-100/50 flex items-center gap-2">
-                                                                    <CheckCircle2 size={10} /> Completed ({completedSubtasks.length})
+                                                                    <CheckCircle2 size={10} /> {t('common.completed')} ({completedSubtasks.length})
                                                                 </div>
                                                                 {completedSubtasks.map((subtask) => {
                                                                     // For completed tasks, we use their original index if needed, but disable drag
